@@ -48,7 +48,7 @@ public class Main {
             System.out.println(Arrays.toString(c));
             System.exit(0);
         }
-        //search in first half
+        //search in first half,0=cStart
         if (arr[rStart][cMid - 1] >= target) {
             int[] ans = BS(arr, rStart, 0, cMid - 1, target);
             System.out.println(Arrays.toString(ans));
