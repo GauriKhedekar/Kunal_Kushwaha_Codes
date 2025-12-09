@@ -1,0 +1,167 @@
+1)public class Main{
+    public static void main(String[] args){
+    int n = 5;
+    /*
+    for n = 3
+    *->row no. = 0
+    * *->row no. = 1
+    * * *->row no. = 2
+    * * ->row number = 3 >= n hence columns = n - (row - n + 1) = 3 - (3 - 3 + 1) = 2,similarly for below rows
+    *->row no. = 4
+     */
+        for (int row = 0; row < 2 * n - 1; row++) {
+            int columns = row >= n ? 2 * n - row - 1 : row + 1;
+
+            for (int col = 0; col < columns; col++) {
+                System.out.print("* ");
+            }
+
+            System.out.println();
+        }
+    }
+
+}
+
+o/p:-
+* 
+* * 
+* * * 
+* * * * 
+* * * * * 
+* * * * 
+* * * 
+* * 
+* 
+
+2)public class Main{
+    public static void main(String[] args){
+    int n = 5;
+    /*
+    for n = 3
+      *
+     * *
+    * * *
+     * *
+      *
+    diagram given in notebook for understanding which logic you used
+     */
+        for (int row = 1; row <= 2 * n - 1; row++) {
+            int spaces = row > n ? row - n : n - row;
+            int stars  = row > n ? 2 * n - row : row;
+            //for spaces
+            for (int col = 1; col <= spaces; col++) {
+                System.out.print(" ");
+            }
+            //for stars
+            for (int col = 1; col <= stars; col++) {
+                System.out.print("* ");
+            }
+            System.out.println();
+
+        }
+    }
+
+}
+
+o/p:-
+    * 
+   * * 
+  * * * 
+ * * * * 
+* * * * * 
+ * * * * 
+  * * * 
+   * * 
+    * 
+3)public class Main{
+    public static void main(String[] args){
+    int n = 5;
+    /*
+    for n = 3
+      1
+    2 1 2
+  3 2 1 2 3
+    diagram given in notebook for understanding which logic you used
+     */
+        for (int row = 1; row <= n; row++) {
+            int spaces = n - row;// 1 based indexing hence use = in terminating condition
+
+            //for spaces
+            for (int col = 1; col <= spaces; col++) {
+                System.out.print(" ");
+            }
+            //first for loop running n times and another n - 1 times i.e. total 2*n - 1 times
+            //it will print col from 1st col till nth col
+                for(int columns = row; columns >= 1; columns--){
+                    System.out.print(columns);
+
+                }
+
+            //it will print col from (n + 1)th col till (2*n - 1)nth col
+                for(int c = 2; c <= row; c++){
+                    System.out.print(c);
+                }
+            
+            System.out.println();
+
+        }
+    }
+
+}
+
+o/p:-
+
+    1
+   212
+  32123
+ 4321234
+543212345
+
+4)public class Main{
+    public static void main(String[] args){
+    int n = 5;
+    /*
+    for n = 3
+      1    ->cStart = 1 = row
+    2 1 2  ->cStart = 2
+  3 2 1 2 3
+    2 1 2   ->row no. = 4,cStart = row - n + 1 = 2
+      1
+    diagram given in notebook for understanding which logic you used
+     */
+        for (int row = 1; row <= 2*n - 1; row++) {
+            int spaces = row > n ? row - n : n - row;// 1 based indexing hence use = in terminating condition
+            int cStart = row > n ? 2*n - row : row;
+            //for spaces
+            for (int col = 1; col <= spaces; col++) {
+                System.out.print(" ");
+            }
+            //first for loop running n times and another n - 1 times i.e. total 2*n - 1 times
+            //it will print col from 1st col till nth col,printingwise will go from cStart to 1
+                for(int columns = cStart; columns >= 1; columns--){
+                    System.out.print(columns);
+
+                }
+
+            //it will print col from (n + 1)th col till (2*n - 1)nth col,printingwise will go from 2 till cStart
+                for(int c = 2; c <= cStart; c++){
+                    System.out.print(c);
+                }
+
+            System.out.println();
+
+        }
+    }
+
+}
+
+o/p:-
+    1
+   212
+  32123
+ 4321234
+543212345
+ 4321234
+  32123
+   212
+    1
