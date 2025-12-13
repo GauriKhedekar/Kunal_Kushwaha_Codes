@@ -1,0 +1,162 @@
+✅ RIGHTMOST SET BIT — SHORT NOTES
+🔹 Step 1: 2’s Complement Rule
+-n = (~n) + 1
+
+🔹 Step 2: Formula to Find Rightmost Set Bit
+RSB = n & (-n)
+📌 Result contains only the rightmost set bit
+
+🔹 Step 3: Position of Rightmost Set Bit
+Position = log2(n & -n) + 1=>(Math.log(n & ~n)/Math.log(2)) + 1=> to get number of digits in a number as leading zeroes have no value and n & ~n gives only number with RSB then total numbers will be equal to rightmost 1 and zeroes after that 1,hence counting number of digits will give us position of rightmost set bit 
+OR
+Position = Integer.numberOfTrailingZeros(n) + 1
+
+🔹 Why n & -n Works (1-Line)
+In 2’s complement, bits after RSB flip, RSB stays 1 → AND keeps only RSB.
+
+🔹 Example (Quick)
+n = 18 → 10010
+-n = 01110
+n & -n = 00010 → RSB
+Position = 2
+
+🔹 Remove Rightmost Set Bit
+n = n & (n - 1)
+
+🔹 Check if Number is Power of 2
+(n & (n - 1)) == 0
+
+🔹 Edge Case
+n = 0 → n & -n = 0
+
+2)Find a number which appeared once in an array,all the other numbers except that number have appeared thrice hence took % 3 at last in code
+public class Main {
+    public static void main(String[] args) {
+
+        // Array to store count of set bits at each bit position (0 → LSB, 31 → MSB)
+        int[] ans = new int[32];
+
+        // Input array where every number appears 3 times except one
+        int[] testCase = {1, 1, 1, 4, 7, 7, 7};
+
+        // Step 1: Count set bits position-wise
+        for (int num : testCase) {
+
+            int idx = 0; // represents current bit position (LSB = index 0)
+
+            // Extract bits of current number until it becomes 0
+            while (num > 0) {
+
+                // num & 1 extracts the Least Significant Bit (LSB)
+                // Add this bit to its corresponding position count
+                ans[idx] += (num & 1);
+
+                // Move to next bit position
+                idx++;
+
+                // Right shift num to process next bit
+                num = num >> 1;
+            }
+        }
+
+        // Step 2: Reconstruct the number that appeared only once
+        int numberAppearedOnce = 0;
+
+        for (int i = 0; i < ans.length; i++) {
+
+            // If bit count at position i is NOT multiple of 3,
+            // then this bit belongs to the number that appeared once
+            if (ans[i] % 3 != 0) {
+
+                // Set the ith bit in the result number,used to reverse binary number ,as we have stored it earlier from LSB to MSB but actually we want number from MSB to LSB hence we have reversed it.
+                numberAppearedOnce |= (1 << i);
+            }
+        }
+
+        // Print the unique number,println will convert binary number to integer
+        System.out.println(numberAppearedOnce); // OUTPUT: 4
+    }
+}
+
+3)Find magic number:-
+✅Magic Number (Very Short)
+A magic number is formed by replacing each 1 in the binary representation of a number with powers of 5 (starting from 5¹) and adding them.
+🔹 Example
+Number = 6
+Binary = 110
+Magic number = 5² + 5³ = 150
+
+public class Main {
+    public static void main(String[] args) {
+    int[] sample = new int[32];//to store 32 bit number if available as all decimal numbers can be represented in 32 bit binary number
+    int n = 6;
+    int idx = 0;
+    //we will store numbers from LSB to MSB
+     while(n > 0){
+         sample[idx++] = (n & 1);//to get LSB of a number
+         n = n >> 1;//remove LSB which we have added at sample[idx] in current iteration
+     }
+     int m = sample.length;
+     int magicNumber = 0;
+     int j = 1;//to get power of 5,only go till idx to reduce T.C. as we have filled numbers only till that index,magic number of 6 = 5^1*1 + 5^2*1 = 150 as indexing starts from 1 here hence at 1st index 0 is there and at 2nd and 3rd index 1 is there(if we start idx from LSB)->110=>6
+     for(int i = 0; i < idx; i++){
+         magicNumber += sample[i] * (int)Math.pow(5, j++);
+     }
+     System.out.println(magicNumber);
+    }
+}
+#2nd code
+    int n = 6;
+    int ans = 0;
+    int base = 5;//initially it will be 5^1 = 5 then 5^2=5*5=base*5= 25 then =>base * 5 = 25*5 = 5^3=125 and so on
+    //we will store numbers from LSB to MSB
+     while(n > 0){
+         int last = (n & 1);//to get LSB of a number/to get last digit of binary number of n
+         n = n >> 1;//remove LSB which we have added at sample[idx] in current iteration
+         ans += base * last;
+         base = base * 5;
+     }
+System.out.println(ans);//150 if n = 6
+
+o/p:-150
+
+4)Sum of nth row of pascals triangle if indexing starts from 1
+public class Main {
+    public static void main(String[] args) {
+
+        int n = 1; // row number (1-based)
+
+        int sum = 1 << (n - 1); // 2^(n-1),for nth row -> sum = 2^(row number (i.e. n) - 1),here n = 1 so its is 1 << (n-1)=> 1 << 0 => i.e. 1*2^(n-1)=>1*2^(0)
+
+        System.out.println(sum);
+    }
+}
+o/p:-1
+
+5)public class Main {
+    public static void main(String[] args) {
+        //find out whether digit is power of 2 or not=>if there is only one bit is set bit in binary representation of a number then number is power of 2 else it's not as 1000=>2^3(which is power of 2),110=>2^2+2^1=>6(which is not a power of 2)
+#Approach 1
+      int count = 0;
+      while(n > 0){
+       int last = n & 1;
+       if(last == 1) count++;
+        n = n >> 1;
+}
+    int boolean ans = count == 1;//if count of number of set bits in a binary representation of given number is 1 then given number is power of 2
+    System.out.println(ans);
+
+#Approach 2:-
+   //see explanation from kunal kushwaha's notes=100000 = 11111 + 1 = (n - 1) + 1 and when you do (n & (n - 1)) => here => 100000 & 011111 => you will get 0 else you won't this is only possible when number is power of two or there is only one set bit in ninary representation of n hence
+   //edge case:- if n = 0 then n & (n - 1) => 0 & (0 - 1) => 0 but 0 is not a power of 2
+   if(n == 0) {
+      System.out.println(false);
+      System.exit(0);
+   }   
+   boolean ans = (n & (n - 1)) == 0;
+   System.out.println(ans);
+
+}
+}
+
+6)
