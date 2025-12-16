@@ -181,4 +181,102 @@ o/p:-1
 }
 o/p:-729
 
-7)
+7)find number of set bits in a number:-
+public class Main {
+    public static void main(String[] args) {
+     //T.C. = no. of set bits => can understand by dry running th program just do first count++ and then n - ( n & -n) while(n > 0)
+     int count = 0;
+     int n = 4;
+     System.out.println(Integer.toBinaryString(n));
+     while(n > 0){
+         count++;
+         n = n - (n & -n);//or n = n & (n - 1),don't know how we derived it but it's one of the shortcut for finding set bits
+     }
+     System.out.println(count);
+
+    }
+}
+o/p:-
+100
+1
+
+8) /*find xor of numbers from 0 to a
+       1)0 to 9
+       a  ->   (xor from 0 till a)
+       0 -> 0(if a % 4 == 0 -> xor = a)
+       1 -> 0^1 -> 1 (if a % 4 == 1 -> xor = 1)
+       2 -> 0^1^2 -> 1^2 -> (001^010) -> 3(if a % 4 == 2 -> xor = a + 1)
+       3 -> 0^1^2^3 -> 0(if a % 4 == 3 -> xor = 0)
+       =>we have only taken remainders as 0, 1, 2, 3 as if we divide any number by 4 then possible remainders are 0, 1, 2, 3
+       =>above conclusions same for all numbers, derived by taking out xors till some a's and finding out pattern between them
+      */
+
+9)find xor in range a to b:-
+public class Main {
+    public static void main(String[] args) {
+        //T.C=O(1)
+        //find xor in range a to b
+        //3 to 6 => 3^4^5^6 => ((1^2^)3^4^5^6)^(1^2) => here 1^2 will get cancel out => 3^4^5^6 => (xor from 0 till b) ^ (xor from 0 till a -1)
+        int a = 3;
+        int b = 9;
+        int ans = xorFromZeroTillA(b) ^ xorFromZeroTillA(a - 1);
+        System.out.println(ans);
+    }
+    public static int xorFromZeroTillA(int a){
+        /*find xor of numbers from 0 to a
+       1)0 to 9
+       a  ->   (xor from 0 till a)
+       0 -> 0(if a % 4 == 0 -> xor = a)
+       1 -> 0^1 -> 1 (if a % 4 == 1 -> xor = 1)
+       2 -> 0^1^2 -> 1^2 -> (001^010) -> 3(if a % 4 == 2 -> xor = a + 1)
+       3 -> 0^1^2^3 -> 0(if a % 4 == 3 -> xor = 0)
+       =>we have only taken remainders as 0, 1, 2, 3 as if we divide any number by 4 then only possible remainders are 0, 1, 2, 3
+       =>above conclusions same for all numbers, derived by taking out xors till some a's and finding out pattern between them
+      */
+            if(a % 4 == 0) return a;
+            if(a % 4 == 1) return 1;
+            if(a % 4 == 2) return (a + 1);
+            if(a % 4 == 3) return 0;
+            return 0;//if negative numbers are there as pattern valid only for positive numbers(0 is positive number)
+        }
+}
+o/p:- 2
+
+10)Flipping an image:-Reverse every row of the binary matrix, then flip each bit (0→1, 1→0)(Google)
+class Solution {
+    public int[][] flipAndInvertImage(int[][] image) {
+        int n = image.length;
+        int m = image[0].length;//but it's also n given in constraints->just for understanding
+        for(int i =0; i < n; i++){
+            /*swap elements to reverse row and exor swapped elements to invert each element at the same time i.e. while swapping.*/
+            int left = 0;
+            int right = m - 1;
+            while(left <= right){
+                /*if you xor any number with 1 you will get inverted number of it
+                e.g.if a is that number
+                a^1 = 1^1 = 0;
+                a^1 = 0^1 = 1;
+                */
+                int temp = image[i][left];
+                image[i][left] = image[i][right]^1;
+                image[i][right] = temp^1;
+                left++;
+                right--;
+
+            }
+        }
+        return image;
+    }
+}
+o/p:-
+Accepted
+Runtime: 0 ms
+Case 1
+Case 2
+Input
+image =
+[[1,1,0],[1,0,1],[0,0,0]]
+Output
+[[1,0,0],[0,1,0],[1,1,1]]
+Expected
+[[1,0,0],[0,1,0],[1,1,1]]
