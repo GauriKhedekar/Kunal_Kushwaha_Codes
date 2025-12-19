@@ -148,7 +148,7 @@ Newton–Raphson method runs in O(log N · f(N)) time, where f(N) is the cost of
 
 3)Factors of a number:-
 //T.C:-O(sqrt(n))
-//S.C:-O(n
+//S.C:-In the worst case, a number n can have at most O(√n) factors.
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
@@ -172,5 +172,67 @@ public class Main {
 
     }
 }
+
+4)Modulo Properties:-
+📌 Modulo Properties for Programming
+Let a, b, c be integers and m > 0 (modulus).
+
+1️⃣ Addition
+(a + b) % m = ((a % m) + (b % m)) % m
+
+2️⃣ Subtraction
+(a - b) % m = ((a % m) - (b % m) + m) % m
+(+ m avoids negative values)
+
+3️⃣ Multiplication
+(a * b) % m = ((a % m) * (b % m)) % m
+
+4️⃣ Exponentiation
+(a^b) % m = ((a % m)^b) % m
+(Use fast power for large b)
+
+5️⃣ Division (Important)
+❌ Division is not directly allowed in modulo.
+✔ Use multiplicative modulo inverse:
+(a / b) % m = (a * b⁻¹) % m
+
+6)(a % m) % m = a % m
+
+7)m^x % m = 0 where x belongs to positive integers
+
+📌 Multiplicative Modulo Inverse
+Definition
+For a number a under modulo m,
+x is called the modulo inverse of a if:
+(a * x) % m = 1
+Written as:
+a⁻¹ % m
+
+Condition for Existence
+Modulo inverse exists only if:
+gcd(a, m) = 1
+
+Ways to Find Modulo Inverse
+1️⃣ Extended Euclidean Algorithm
+Works for any modulo:
+a*x + m*y = 1
+Here, x is the modulo inverse.
+🔹 Example
+Find modulo inverse of a = 3 under modulo m = 11
+Using Extended Euclidean Algorithm:
+3*4 + 11*(-1) = 1
+Taking modulo 11:
+3*4 % 11 = 1
+✅ So:
+3⁻¹ % 11 = 4
+
+2️⃣ Fermat’s Little Theorem : if p is a prime number which is not a divisor of b then,
+ab^(p - 1) % p = a % p due to this theorem.
+
+📌 Co-Prime Numbers
+Two numbers a and b are co-prime if:
+gcd(a, b) = 1
+They share no common factor except 1.
+
 
 
