@@ -56,3 +56,121 @@ Total work:
 ✅ O(n)
 
 2)Sqrt of a number:-
+Approach 1:-
+public class Main {
+    public static void main(String[] args) {
+
+        int n = 26;
+        int s = 0, e = n;
+
+        // Binary search will NOT give exact square root for non-perfect squares.
+        // It only finds the largest integer 'm' such that m*m <= n.
+        // This value is called floor(sqrt(n)) and is used as the base
+        // to calculate decimal precision later.
+        double root = 0.0;
+
+        // -------- INTEGER PART (Binary Search) --------
+        while (s <= e) {
+            int m = s + (e - s) / 2;
+
+            if (m * m == n) {
+                // Perfect square case → exact root found
+                root = m;
+                break;
+            }
+
+            if (m * m > n) {
+                // m is too large, discard right half
+                e = m - 1;
+            } else {
+                // m*m < n → m is a valid candidate
+                // Store it because it may be the floor value of sqrt(n)
+                root = m;
+                s = m + 1;
+            }
+        }
+
+        // -------- DECIMAL PRECISION PART --------
+        // Now we already have floor(sqrt(n)).
+        // We increase the root step-by-step to get decimal places.
+        int p = 3;          // number of decimal places
+        double step = 0.1;
+
+        for (int i = 0; i < p; i++) {
+            while (root * root <= n) {
+                root += step;
+            }
+            // when root*root becomes > n, step back
+            root -= step;
+            step /= 10;     // increase precision (0.1 → 0.01 → 0.001)
+        }
+
+        System.out.println(root);
+    }
+}
+Binary Search → O(log n)
+Precision Loop → O(p)
+Total → O(log n + p)
+#Approach 2:-Newtons Raphson method:-
+public class Main {
+    public static void main(String[] args) {
+
+        int n = 40;            // Number whose square root we want
+        double x = n;          // Initial guess (we start with n itself)
+        double root;           // To store the new approximation of sqrt(n)
+
+        // This loop runs until we get a sufficiently accurate answer
+        // Time Complexity:
+        // Each iteration improves the answer very fast (error reduces exponentially)
+        // So total iterations ≈ log(log n)
+        // Overall TC of this method is O(log log n)
+        while (true) {
+
+            // Newton-Raphson formula to find square root:
+            // new_root = (x + n/x) / 2
+            root = 0.5 * (x + (n / x));
+
+            // If difference between new value and old value is very small,
+            // we stop because root is accurate enough
+            if (Math.abs(root - x) < 1) {
+                break;        // error is less than 1, stop iteration
+            }
+
+            // Update x with better approximation
+            x = root;
+        }
+
+        // Print the final square root value
+        System.out.println(root);
+    }
+}
+Newton–Raphson method runs in O(log N · f(N)) time, where f(N) is the cost of evaluating f(x)/f′(x) with N-digit precision, due to quadratic convergence.
+
+3)Factors of a number:-
+//T.C:-O(sqrt(n))
+//S.C:-O(n
+import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) {
+      int n = 20;
+      ArrayList<Integer> ans = new ArrayList<Integer>();
+      for(int i = 1; i <= Math.sqrt(n); i++){
+          if(n % i == 0) {
+              ans.add(i);
+          }
+      }
+      //add factors of n which are multiplied with i to get n but in reverse order i.e. factor i.e. multiplied with sqrt of n will come first...
+        //first we will start iterating from last index in an existing arraylist and get factor related to it and will add it in an existing arraylist
+        for(int i = ans.size() - 1; i >= 0; i--){
+            int factor = n / ans.get(i);
+            //Incase if n is perfect square then to avoid printing duplicate factors ,e.g if n = 9(perfect square) then ans.get(i) = (n / ans.get(i))(Or factor) = 3 which will lea to [printing 3 twice,to avoid that we have used if condition
+            if(ans.get(i) != factor) {
+                ans.add(factor);
+            }
+        }
+      System.out.println(ans);
+
+    }
+}
+
+
