@@ -40,6 +40,4 @@ public class Main {
             return ch + removea(str.substring(1));//else add character which is not 'a' in ans string
         }
     }
-
-![Recursion Tree of Subsets](images/recursion_tree_of_subsets_question.png)
   
