@@ -191,6 +191,48 @@ o/p:-
 ```
 # 5)Create all possible subsets Array(having duplicates in it):-
 ---
-![q]()
+![q](images/subsets_duplicates_recur_1.png)
+![a](images/subsets_duplicates_recur_2.png)
 ```java
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 2};
+        System.out.println(possibleSubsets(arr));
+    }
+
+    public static ArrayList<ArrayList<Integer>> possibleSubsets(int[] arr) {
+        Arrays.sort(arr);//MUST for duplicates.
+
+        ArrayList<ArrayList<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+
+        int start = 0;
+        int end = 0;
+
+        for (int j = 0; j < arr.length; j++) {
+            start = 0;
+
+            // if current element is duplicate, only add to subsets created in previous step/newly created previous subsets
+            if (j > 0 && arr[j] == arr[j - 1]) {
+                start = end + 1;
+            }
+
+            end = outer.size() - 1;/*to get the size of next start index if next element is duplicate element as (start = end + 1) if element is duplicate as given in recursion tree.*/
+            int size = outer.size();
+
+            for (int i = start; i < size; i++) {
+                ArrayList<Integer> inner = new ArrayList<>(outer.get(i));
+                inner.add(arr[j]);//
+                outer.add(inner);
+            }
+        }
+        return outer;
+    }
+}
+o/p:-
+[[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]
+```
 
