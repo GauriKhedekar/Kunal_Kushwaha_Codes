@@ -88,7 +88,11 @@ b
 c
 
 ```
+
 ## Approach 2:-return all possible subsequences in an ArrayList:-
+---
+![Recursion](images/ArrayList_Subsequences.jpg)
+
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -115,7 +119,7 @@ public class Main {
 }
 o/p:-[abc, ab, ac, a, bc, b, c, ]
 ```
-# Return all possible subsequences along with ascii value of character which you are keeping.
+# 3)Return all possible subsequences along with ascii value of character which you are keeping.
 ---
 
 ```java
