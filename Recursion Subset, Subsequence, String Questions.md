@@ -55,12 +55,11 @@ public class Main {
 # Subsets:-
 - Whenever you are dealing with permutation or combinations like creating all possible subsets( [a, b]=[b, a] = same subset but return subset in a given order of elements.as order may matter in subsets,e.g.[a, b, c] = [], [a], [b], [c], [a, b], [b, c], [a, c], [a, b, c] = 8 possible subsets)
 - Subsets - Non - Adjacent Collection
-
-![Recursion Tree of Subsets](images/recursion_tree_of_subsets_question.png)
-
 # 2)Return all possible subsequences of given String:-
 ---
 ## Approach 1:- Print all possible subsequences in a String.
+![Recursion Tree of Subsets](images/recursion_tree_of_subsets_question.png)
+
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -121,6 +120,7 @@ o/p:-[abc, ab, ac, a, bc, b, c, ]
 ```
 # 3)Return all possible subsequences along with ascii value of character which you are keeping.
 ---
+![Recursion_ascii](images/ArrayList_Subseuences_Ascii.jpg)
 
 ```java
 import java.util.ArrayList;
@@ -151,4 +151,7 @@ public class Main {
 }
 o/p:-[abc, ab, ab99, ac, a, a99, a98c, a98, a9899, bc, b, b99, c, , 99, 98c, 98, 9899, 97bc, 97b, 97b99, 97c, 97, 9799, 9798c, 9798, 979899]
 ```
+# 4)Return all posssible subsets from given array of elements:-
+---
+![r]()
 
