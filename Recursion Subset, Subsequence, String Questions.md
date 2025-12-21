@@ -151,7 +151,46 @@ public class Main {
 }
 o/p:-[abc, ab, ab99, ac, a, a99, a98c, a98, a9899, bc, b, b99, c, , 99, 98c, 98, 9899, 97bc, 97b, 97b99, 97c, 97, 9799, 9798c, 9798, 979899]
 ```
-# 4)Return all posssible subsets from given array of elements:-
+# 4)Return all posssible subsets from given array of elements:- N = number of elements in an array
 ---
-![r]()
+![r](images/subsets_recursion.png)
+
+- T.C:-number of levels in a recursive tree * total number of subsets at each level = O(N * 2^N)
+- S.C:-number of levels(space taken by each subset in an overall recursive tree obviously one space at each level) * 2^N(total number of subsets) = O(N * 2^N)
+```java
+import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        System.out.println(possibleSubsets(arr));
+        }
+
+    public static ArrayList<ArrayList<Integer>> possibleSubsets(int[] arr) {
+        ArrayList<ArrayList<Integer>> outer = new ArrayList<>();
+        //outer list is whole list including all subsets lists at particular level
+        //initially add empty list to it as per recursion tree
+        outer.add(new ArrayList<>());
+
+        //for every number in an array ,I need to take an size of this outer list(initially its 1 as there is only one empty list in an ArrayList) and create a copy of list's one by one present inside an outer array and create new list(containing element from an Array which we have to keep and elements from old ith list which we have copied using outer.get(i)) and add it in my original list
+        //original list = current outer list
+        //take size of outer list to create number of ArrayLists = current size of outer ArrayList, to add those in an outer ArrayList.
+        for (int num : arr) {
+            int size = outer.size();
+            for (int i = 0; i < size; i++) {
+                //Create a new list to add arr elements in it to create subset
+                ArrayList<Integer> inner = new ArrayList<>(outer.get(i));//to create copy of outer list's ith list and then add arr elements each of ith list with one iteration.
+                inner.add(num);
+                outer.add(inner);
+            }
+        }
+        return outer;
+    }
+}
+o/p:-
+[[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+```
+# 5)Create all possible subsets Array(having duplicates in it):-
+---
+![q]()
+```java
 
