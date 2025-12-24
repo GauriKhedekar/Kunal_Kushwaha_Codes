@@ -1,7 +1,7 @@
 # Maze Problems:-
 ---
 ## 1)Find no. of possible ways to reach pt B:-Counting paths
-![o](images/)
+![o](images/returning_paths.jpg)
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -30,7 +30,7 @@ o/p:-
 ```
 ---
 ## 2)Returning possible paths in an ArrayList :-
-![t](images/)
+![t](images/counting_paths.jpg)
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -61,7 +61,7 @@ o/p:-
 ```
 ---
 ## 3)Including Diagonal Paths:-
-![f](images/)
+![f](images/including_diagonal_paths.jpg)
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -97,7 +97,7 @@ o/p:-
 ## 4)Maze with Obstacles:-but allow going diagonally from the sides of that path but if we move diagonally, our agent shouldn't land on obstacle
 - here,change in recursive tree is only this -> when we come on the obstacle -> i.e. at (2, 2) = (r, c) => it will just return empty ans array at that point and stop the recursion call for that particular path(as it would be invalid path if we continue) and it will go back to the next line of the line from where it was called ,and will call the function written on that next line. 
 ## Approach 1:- hardcode obstacle position
-![o](images/)
+![o](images/path_with_obstacles_1.jpg)
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -137,7 +137,7 @@ o/p:-
 [DDRR, DdR, RdD, RRDD]
 ```
 ## Approach 2:- Pass boolean maze[][] matrix as a parameter and whenever you encounter false just end recursion for that particular call just like we did in Approach1:- 
-![p](images/)
+![p](images/path_with_obstacles_2.jpg)
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -176,7 +176,8 @@ public class Main {
 ```
 ---
 ##  5)Including All Paths:-Recursion + Backtracking:-
-![t](images/)
+- This below image is reference for both Q.5 & Q.6
+![t](images/including_all_paths_5_6.jpg)
 ```java
  import java.util.ArrayList;
 public class Main {
@@ -222,8 +223,7 @@ public class Main {
 o/p:-
 [DDRR, DDRURD, DDRUURDD, DRDR, DRRD, DRURDD, RDDR, RDRD, RDLDRR, RRDD, RRDLDR, RRDLLDRR]
 ```
-## Q6 : Print Matrix and Paths:-
-![f](images/)
+## Q6 : Print Matrix(containing steps of path) and Paths(actual path-processed String)-including all paths:-
 ```java
 import java.util.Arrays;
 public class Main {
