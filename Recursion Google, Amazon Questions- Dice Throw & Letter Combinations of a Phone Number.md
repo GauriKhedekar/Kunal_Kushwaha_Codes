@@ -110,7 +110,7 @@ cf
 ---
 # Dice Throw1:-
 ## You have given a dice and you have to return ArrayList containing all possible combinations of rolling of a dice to get targetSum 
-![s](images/Dice_Throw1.jpg)
+![s](images/Dice_Throw1.png)
 ```java
 import java.util.ArrayList;
 public class Main {
