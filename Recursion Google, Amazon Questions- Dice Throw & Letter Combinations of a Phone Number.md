@@ -49,7 +49,7 @@ public class Main {
 o/p:-
 [ad, ae, af, bd, be, bf, cd, ce, cf]
 ```
-# Returning the count of possible permutations:-
+# Returning the count of possible permutations of above problem:-
 ```java
 import java.util.ArrayList;
 public class Main {
@@ -141,7 +141,6 @@ o/p:-
 ## Given n dices each with m faces, numbered from 1 to m, the task is to find the number of ways to get sum x. x is the summation of values on each face when all the dice are thrown.
 ## Examples: Input: m = 6, n = 3, x = 12 , Output: 25
 ## Explanation: There are 25 total ways to get the Sum 12 using 3 dices with faces from 1 to 6.
-![g](images/)
 ```java
 class GfG {
 
