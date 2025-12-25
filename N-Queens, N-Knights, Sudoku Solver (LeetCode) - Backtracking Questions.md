@@ -268,7 +268,7 @@ public class Main {
        public static boolean isValid(boolean[][] board, int row, int col){
          return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
        }
-       //if any Knight exists in L shape return false
+       //if any Knight exists in L shape return false,3 moves are must.
        public static boolean isSafe(boolean[][] board, int row, int col){
         if(isValid(board, row - 2, col - 1)){
             if(board[row - 2][col - 1]){
@@ -280,13 +280,13 @@ public class Main {
                    return false;
                }
            }
-           if(isValid(board, row - 1, col - 1)){
-               if(board[row - 1][col - 1]){
+           if(isValid(board, row - 1, col - 2)){
+               if(board[row - 1][col - 2]){
                    return false;
                }
            }
-           if(isValid(board, row - 1, col + 1)){
-               if(board[row - 1][col + 1]){
+           if(isValid(board, row - 1, col + 2)){
+               if(board[row - 1][col + 2]){
                    return false;
                }
            }
@@ -307,24 +307,20 @@ public class Main {
     }
 }
 o/p:-
-K X K 
-K X K 
+K K K 
+X K X 
+X X X 
+
+K K X 
+K K X 
 X X X 
 
 K X K 
-K X X 
-K X X 
-
-K X K 
-K X X 
-X X K 
-
-K X K 
-X X K 
+X K X 
 K X X 
 
 K X K 
-X X K 
+X K X 
 X X K 
 
 K X K 
@@ -332,38 +328,54 @@ X X X
 K X K 
 
 K X X 
-K X K 
+K K X 
 K X X 
 
 K X X 
-K X K 
-X X K 
-
-K X X 
-K X X 
+X K X 
 K X K 
 
-K X X 
-X X K 
+X K K 
+X K K 
+X X X 
+
+X K X 
+K K K 
+X X X 
+
+X K X 
+K K X 
+X K X 
+
+X K X 
 K X K 
+X K X 
+
+X K X 
+X K K 
+X K X 
 
 X X K 
-K X K 
-K X X 
-
-X X K 
-K X K 
+X K K 
 X X K 
 
 X X K 
-K X X 
-K X K 
-
-X X K 
-X X K 
+X K X 
 K X K 
 
 X X X 
-K X K 
-K X K
+K K K 
+X K X 
+
+X X X 
+K K X 
+K K X 
+
+X X X 
+X K K 
+X K K 
+
+X X X 
+X K X 
+K K K 
 ```
