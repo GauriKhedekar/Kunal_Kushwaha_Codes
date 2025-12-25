@@ -225,5 +225,145 @@ $$
 ```java
 boolean[][] board = new boolean[N][N];
 ```
+- you can eleminate for loops by increasing number of parameters in function call.
 ---
-# 2)N-Knights problem:-​
+# 2)N-Knights problem:-
+![o](images/)​
+```java
+import java.util.Arrays;
+public class Main {
+    public static void main(String[] args) {
+        boolean[][] board = new boolean[4][4];
+        int knights = 4;
+        Knights(board, 0, 0, knights);
+    }
+
+    public static void Knights(boolean[][] board, int row, int col, int knights){
+        //Base case 1: All Knights placed
+        if(knights == 0){
+            display(board);
+            System.out.println();
+            return;
+            }
+        // BASE CASE 2: Out of rows (Board finished)
+        if (row == board.length) {
+            return;
+        }
+        //Base case: 3
+        //if you are at last column after backtracking and in the same row if there are 3 knights you can just go to the next line to check ,can you place night over there or not?
+        if(col == board[0].length){
+            Knights(board, row + 1, 0, knights);
+            return;
+        }
+        //Placing queen and checking for every row and column
+            if(isSafe(board, row, col)){
+                board[row][col] = true;
+                Knights(board, row, col + 1, knights - 1);
+                board[row][col] = false;//backtrack
+            }
+            //if current row and col are not safe to place a Knight just move ahead
+            Knights(board, row, col + 1, knights);
+        }
+        //to check whether a position which we are using to check whether Knight exist there or not valid / not?otherwise if we are trying to access element which is out of bounds it will give IOBE hence use isValid() to avoid IOBE...
+       public static boolean isValid(boolean[][] board, int row, int col){
+         return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
+       }
+       //if any Knight exists in L shape return false
+       public static boolean isSafe(boolean[][] board, int row, int col){
+        if(isValid(board, row - 2, col - 1)){
+            if(board[row - 2][col - 1]){
+                return false;
+            }
+        }
+           if(isValid(board, row - 2, col + 1)) {
+               if (board[row - 2][col + 1]) {
+                   return false;
+               }
+           }
+           if(isValid(board, row - 1, col - 1)){
+               if(board[row - 1][col - 1]){
+                   return false;
+               }
+           }
+           if(isValid(board, row - 1, col + 1)){
+               if(board[row - 1][col + 1]){
+                   return false;
+               }
+           }
+        return true;
+        }
+        public static void display(boolean[][] board){
+        for(boolean[] arr: board){
+            for(boolean element: arr){
+                if(element){
+                    System.out.print("K ");
+                }
+                else{
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+o/p:-
+K X K 
+K X K 
+X X X 
+
+K X K 
+K X X 
+K X X 
+
+K X K 
+K X X 
+X X K 
+
+K X K 
+X X K 
+K X X 
+
+K X K 
+X X K 
+X X K 
+
+K X K 
+X X X 
+K X K 
+
+K X X 
+K X K 
+K X X 
+
+K X X 
+K X K 
+X X K 
+
+K X X 
+K X X 
+K X K 
+
+K X X 
+X X K 
+K X K 
+
+X X K 
+K X K 
+K X X 
+
+X X K 
+K X K 
+X X K 
+
+X X K 
+K X X 
+K X K 
+
+X X K 
+X X K 
+K X K 
+
+X X X 
+K X K 
+K X K
+```
