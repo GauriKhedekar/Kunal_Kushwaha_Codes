@@ -228,7 +228,7 @@ boolean[][] board = new boolean[N][N];
 - you can eleminate for loops by increasing number of parameters in function call.
 ---
 # 2)N-Knights problem:-
-![o](images/)​
+![o](images/N-Knights.png)​
 ```java
 import java.util.Arrays;
 public class Main {
