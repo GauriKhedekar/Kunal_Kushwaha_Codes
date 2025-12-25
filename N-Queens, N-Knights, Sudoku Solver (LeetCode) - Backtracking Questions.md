@@ -520,7 +520,7 @@ o/p:-
 # Time & Space complexity of above Sudoku solver code:-
 # Sudoku Solver Complexity Analysis
 
-* **Time Complexity:** $O(n^{n^2})$
+* **Time Complexity:** $O(n^{n^2})$,here T.C.:-O(9^(n^2))
     * The algorithm tries up to $n$ possibilities for each of the $n^2$ cells, leading to an exponential number of recursive branches.
 
 
