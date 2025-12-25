@@ -1,2 +1,4 @@
 1)what is out:-out is a static object of the PrintStream class(dtype of out ref. variable) present in the System class, used to print output on the console.
 2)Whenever you are writing code first come up with the brute force approach and to optimize it first see which things are repeating and how can you get repeating things using non-repeating things,even if Space complexity increases a bit ,it's okay but optimize your code in terms of time complexity
+3)Whenever you are solving a coding problem, no-one knows a perfect solution-everyone just try to find possibilities and cases to get the output like how can you do it manually and which all possibilties or cases will you check to get that output maually and then try to code that approach that's it!!
+4)whenever you are not understanding any code just dry run it by taing any example you will definitely understand it!!
