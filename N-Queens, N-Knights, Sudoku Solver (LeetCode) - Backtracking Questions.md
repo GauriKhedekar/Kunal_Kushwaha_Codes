@@ -466,8 +466,6 @@ public class Main {
 
     }
 
-
-    //if any Knight exists in L shape return false
     public static boolean isSafe(int[][] board, int row, int col, int num) {
         //check the row
         for (int i = 0; i < board.length; i++) {
