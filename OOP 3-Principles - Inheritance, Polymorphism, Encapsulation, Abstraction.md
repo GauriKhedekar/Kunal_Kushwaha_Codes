@@ -179,129 +179,125 @@ Therefore:
 ---
 # KK notes:-
 ## Inheritance-
-Multiple inheritance is not available in java.
-(Same functions in 2 classes it will skip that hence no multiple inheritance)
+To inherit a class, you simply incorporate the definition of one class into another by using the extends keyword.
 
-Instead we have java interfaces. they have abstract functions (no body of functions)
-
-Interface is like class but not completely. it is like an abstract class.
-By default functions are public and abstract in interface.
-variables are final and static by default in interface.
-
-Interfaces specify only what the class is doing, not how it is doing it.
-The problem with MULTIPLE INHERITANCE is that two classes may define different ways of doing the same thing,
-and the subclass can't choose which one to pick.
-
-Key difference between a class and an interface: a class can maintain state information
-(especially through the use of instance variables), but an interface cannot.
-
-Using interface, you can specify a set of methods that can be implemented by one or more classes.
-Although they are similar to abstract classes, interfaces have an additional capability:
-A class can implement more than one interface. By contrast, a class can only inherit a single superclass
-(abstract or otherwise).
-
-Using the keyword interface, you can fully abstract a class’ interface from its implementation.
-That is, using interface, you can specify what a class must do, but not how it does it.
-
-Interfaces are syntactically similar to classes, but they lack instance variables, and, as a general rule,
-their methods are declared without any body.
-
-By providing the interface keyword, Java allows you to fully utilize the “one interface, multiple methods”
-aspect of polymorphism.
-
-NOTE: Interfaces are designed to support dynamic method resolution at run time.
-Normally, in order for a method to be called from one class to another, both classes need to be present at compile time
-so the Java compiler can check to ensure that the method signatures are compatible. This requirement by itself makes for
-a static and nonextensible classing environment. Inevitably in a system like this, functionality gets pushed up higher
-and higher in the class hierarchy so that the mechanisms will be available to more and more subclasses. Interfaces are
-designed to avoid this problem. They disconnect the definition of a method or set of methods from the inheritance
-hierarchy. Since interfaces are in a different hierarchy from classes, it is possible for classes that are unrelated
-in terms of the class hierarchy to implement the same interface. This is where the real power of interfaces is realized.
-
-Beginning with JDK 8, it is possible to add a default implementation to an interface method.
-Thus, it is now possible for interface to specify some behavior.However, default methods constitute what is, in essence,
-a special-use feature, and the original intent behind interface still remains.
-
-Variables can be declared inside of interface declarations.
-NOTE: They are implicitly final and static, meaning they cannot be changed by the implementing class.
-They must also be initialized. All methods and variables are implicitly public.
-
-NOTE: The methods that implement an interface must be declared public. Also, the type signature of the implementing
-method must match exactly the type signature specified in the interface definition.
-
-It is both permissible and common for classes that implement interfaces to define additional members of their own.
-
-NOTE:
-You can declare variables as object references that use an interface rather than a class type.
-This process is similar to using a superclass reference to access a subclass object.
-Any instance of any class that implements the declared interface can be referred to by such a variable.
-When you call a method through one of these references, the correct version will be called based on the actual instance
-of the interface being referred to. Called at run time by the type of object it refers to.
-The method to be executed is looked up dynamically at run time, allowing classes to be created later than the code which
-calls methods on them.
-The calling code can dispatch through an interface without having to know anything about the “callee.”
-
-CAUTION: Because dynamic lookup of a method at run time incurs a significant overhead when compared with the normal
-method invocation in Java, you should be careful not to use interfaces casually in performance-critical code.
-
-
-Nested Interfaces:
-
-An interface can be declared a member of a class or another interface. Such an interface
-is called a member interface or a nested interface. A nested interface can be declared as public, private, or protected.
-This differs from a top-level interface, which must either be declared as public or use the default access level.
-
-// This class contains a member interface.
-class A {
-  // this is a nested interface
-  public interface NestedIF {
-    boolean isNotNegative(int x);
-  }
+class subclass-name extends superclass-name { // body of class
 }
-// B implements the nested interface.
-class B implements A.NestedIF {
-  public boolean isNotNegative(int x) {
-    return x < 0 ? false: true;
-  }
-}
-class NestedIFDemo {
-  public static void main(String args[]) {
-    // use a nested interface reference
-    A.NestedIF nif = new B();
-    if(nif.isNotNegative(10))
-      System.out.println("10 is not negative");
-    if(nif.isNotNegative(-12))
-      System.out.println("this won't be displayed");
-  }
+You can only specify one superclass for any subclass that you create. Java does not support the inheritance of
+multiple superclasses into a single subclass. You can, as stated, create a hierarchy of inheritance in which a subclass
+becomes a superclass of another subclass. However, no class can be a superclass of itself.
+
+Although a subclass includes all of the members of its superclass, it cannot access those members of the superclass
+that have been declared as private.
+
+A Superclass Variable Can Reference a Subclass Object:
+It is important to understand that it is the type of the reference variable—not the type of the object that it refers
+to—that determines what members can be accessed.
+When a reference to a subclass object is assigned to a superclass reference variable, you will have access only to
+those parts of the object defined by the superclass.
+
+plainbox      =  weightbox;
+(superclass)     (subclass)
+
+SUPERCLASS ref = new SUBCLASS();    // HERE ref can only access methods which are available in SUPERCLASS
+
+Using super:
+Whenever a subclass needs to refer to its immediate superclass, it can do so by use of the keyword super.
+super has two general forms. The first calls the superclass’ constructor.
+The second is used to access a member of the superclass that has been hidden by a member of a subclass.
+
+BoxWeight(double w, double h, double d, double m) {
+    super(w, h, d); // call superclass constructor
+    weight = m;
 }
 
-Interfaces Can Be Extended:
-One interface can inherit another by use of the keyword extends. The syntax is the same as for inheriting classes.
-Any class that implements an interface must implement all methods required by that interface, including any that are
-inherited from other interfaces.
+Here, BoxWeight( ) calls super( ) with the arguments w, h, and d. This causes the Box constructor to be called,
+which initializes width, height, and depth using these values. BoxWeight no longer initializes these values itself.
+It only needs to initialize the value unique to it: weight. This leaves Box free to make these values private if desired.
+
+Thus, super( ) always refers to the superclass immediately above the calling class.
+This is true even in a multileveled hierarchy.
+
+class Box {
+     private double width;
+     private double height;
+     private double depth;
+
+     // construct clone of an object
+
+     Box(Box ob) { // pass object to constructor
+       width = ob.width;
+       height = ob.height;
+       depth = ob.depth;
+     }
+}
+
+class BoxWeight extends Box {
+     double weight; // weight of box
+
+     // construct clone of an object
+
+     BoxWeight(BoxWeight ob) { // pass object to constructor
+        super(ob);
+        weight = ob.weight;
+     }
+}
+
+Notice that super() is passed an object of type BoxWeight—not of type Box.This still invokes the constructor Box(Box ob).
+NOTE: A superclass variable can be used to reference any object derived from that class.
+Thus, we are able to pass a BoxWeight object to the Box constructor.Of course,Box only has knowledge of its own members.
+
+A Second Use for super
+The second form of super acts somewhat like this, except that it always refers to the superclass of the subclass in
+which it is used.
+
+super.member
+
+Here, member can be either a method or an instance variable. This second form of super is most applicable to situations
+in which member names of a subclass hide members by the same name in the superclass.
+
+super( ) always refers to the constructor in the closest superclass. The super( ) in BoxPrice calls the constructor in
+BoxWeight. The super( ) in BoxWeight calls the constructor in Box. In a class hierarchy, if a superclass constructor
+requires parameters, then all subclasses must pass those parameters “up the line.” This is true whether or not a
+subclass needs parameters of its own.
+
+If you think about it, it makes sense that constructors complete their execution in order of derivation.
+Because a superclass has no knowledge of any subclass, any initialization it needs to perform is separate from and
+possibly prerequisite to any initialization performed by the subclass. Therefore, it must complete its execution first.
+
+NOTE: If super( ) is not used in subclass' constructor, then the default or parameterless constructor of each superclass
+will be executed.
 
 
-Default Interface Methods (aka extension method) :
-A primary motivation for the default method was to provide a means by which interfaces could be expanded without breaking existing code.
-i.e. suppose you add another method without body in an interface. Then you will have to provide the body of that method
-in all the classes that implement that interface.
-Ex:
- default String getString() {
-    return "Default String";
- }
+Using final with Inheritance:
 
-For example, you might have a class that implements two interfaces.
-If each of these interfaces provides default methods, then some behavior is inherited from both.
-# In all cases, a class implementation takes priority over an interface default implementation.
-# In cases in which a class implements two interfaces that both have the same default method, but the class does not
-override that method, then an error will result.
-# In cases in which one interface inherits another, with both defining a common default method, the inheriting
-interface’s version of the method takes precedence.
+The keyword final has three uses:
 
-NOTE: static interface methods are not inherited by either an implementing class or a subinterface.
-i.e. static interface methods should have a body! They cannot be abstract. 
+# First, it can be used to create the equivalent of a named constant.
 
-NOTE : when overriding methods, the access modifier should be same or better i.e. if in Parent Class it was protected, then then overridden should be either protected or public.
+# Using final to Prevent Overriding:
+To disallow a method from being overridden, specify final as a modifier at the start of its declaration.
+Methods declared as final cannot be overridden.
+Methods declared as final can sometimes provide a performance enhancement: The compiler is free to inline calls to them
+because it “knows” they will not be overridden by a subclass. When a small final method is called, often the Java
+compiler can copy the bytecode for the subroutine directly inline with the compiled code of the calling method, thus
+eliminating the costly overhead associated with a method call. Inlining is an option only with final methods.
+Normally, Java resolves calls to methods dynamically, at run time. This is called late binding. However, since final
+methods cannot be overridden, a call to one can be resolved at compile time. This is called early binding.
+
+# Using final to Prevent Inheritance:
+Sometimes you will want to prevent a class from being inherited. To do this, precede the class declaration with final.
+NOTE: Declaring a class as final implicitly declares all of its methods as final, too.
+As you might expect, it is illegal to declare a class as both abstract and final since an abstract class is incomplete
+by itself & relies upon its subclasses to provide complete implementations.
+
+# NOTE: Although static methods can be inherited ,there is no point in overriding them in child classes because the
+method in parent class will run always no matter from which object you call it. That is why static interface methods
+cannot be inherited because these method will run from the parent interface and no matter if we were allowed to
+override them, they will always run the method in parent interface.
+That is why static interface method must have a body.
+
+NOTE : Polymorphism does not apply to instance variables.
 
 ---
 # Polymorphism
