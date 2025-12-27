@@ -7,7 +7,7 @@
 1. Introduction to OOP = Object Oriented Programming
 Programming is divided into classes and objects
 
-Focus is on real-life modeling
+- Focus is on real-life modeling
 Improves:
 Code security
 Code reuse
@@ -21,25 +21,25 @@ Abstraction
 
 # Inheritance :-
 3. What is Inheritance?
-Inheritance means child class acquires properties of parent class
-Parent class = Base class / Super class
-Child class = Derived class / Sub class
+- Inheritance means child class acquires properties of parent class
+- Parent class = Base class / Super class
+- Child class = Derived class / Sub class
 
 Real-life Example :-
-Parents pass:
-Money
-Values
-Habits
-Properties
-Similarly, a class passes variables and methods to another class
+- Parents pass:
+Money,
+Values,
+Habits,
+Properties.
+- Similarly, a class passes variables and methods to another class
 
 4. Basic Definition (Programming)
 One class is created
 Another class extends it
 
 Child class can use:
-Variables
-Methods
+Variables,
+Methods,
 Functions of parent class
 
 5. Syntax of Inheritance (Java)
@@ -51,36 +51,36 @@ class Child extends Parent {
     int y;
 }
 
-extends keyword is used
+extends keyword is used.
 Child class gets access to parent members
 
 6. Parent & Child Class Relationship
-Parent class:
+- Parent class:
 Contains common properties
-Child class:
-Contains parent properties
+- Child class:
+Contains parent properties,
 Plus its own additional properties
 
 Example :-
-Base class: Box
+- Base class: Box
 
-parent properties:-length, width, height
+- parent properties:-length, width, height
 
-Child class:
+- Child class:
 Inherits dimensions
-Adds extra features
+& Adds extra features
 
 7. Constructors in Inheritance
-Constructors are not inherited
-When child object is created:
-Parent constructor executes first
+- Constructors are not inherited
+- When child object is created:
+Parent constructor executes first, 
 Then child constructor executes
-Important Rule
-Parent constructor must be called
+- Important Rule
+Parent constructor must be called,
 If not written explicitly, Java calls it automatically
 
 8. super Keyword
-Used to:
+- Used to:
 Call parent constructor
 - Access parent variables
 - Access parent methods
@@ -102,10 +102,10 @@ Important Statement :-
 - Example meaning from video:
 - Parent obj = new Child();
 
-Accessible:
-- Parent class members
-Not accessible:
-- Child-specific members
+- Accessible:
+Parent class members
+- Not accessible:
+Child-specific members
 
 11. Types of Inheritance (Video Mentions)
 *Single Inheritance
@@ -301,19 +301,20 @@ NOTE : Polymorphism does not apply to instance variables.
 
 ---
 # Polymorphism
-Meaning
-Poly = many
+- Meaning
+Poly = many, 
 Morph = forms
-One entity behaving in multiple forms
-Simple Definition
-Representing the same thing in different ways
+- One entity behaving in multiple forms
+- Simple Definition
+- Representing the same thing in different ways
 
 ## Types of Polymorphism
 1️⃣ Compile-Time Polymorphism (Static)
 Achieved by:
 Method Overloading.
-i.e. Same method name &
-Different:
+i.e.
+- Same : method name 
+- Different:
 Number of parameters
 Type of parameters
 Order of parameters
@@ -322,36 +323,36 @@ add(int a, int b)
 add(double a, double b)
 
 Key Points
-Decided at compile time
-Return type alone cannot differentiate methods
-Java does not support operator overloading
+- Decided at compile time
+- Return type alone cannot differentiate methods
+- Java does not support operator overloading
 
 2️⃣ Runtime Polymorphism (Dynamic)
 Achieved by:
 Method Overriding
 - Method Overriding
 Child class provides its own implementation
-Method must have:
+- Method must have:
 Same name
-Same parameters
-Same return type
+,Same parameters
+.Same return type
 
-class Shape {
+- class Shape {
     void area() { }
 }
 
-class Circle extends Shape {
+- class Circle extends Shape {
     void area() { }
 }
 
-Key Rule
+- Key Rule
 Method call depends on:
 Object type, not reference type
 
 How Java Decides Which Method to Call?
 Rule
-Java uses Dynamic Method Dispatch
-Decision happens at runtime
+- Java uses Dynamic Method Dispatch
+- Decision happens at runtime
 
 Shape s = new Circle();
 s.area();   // Circle's area() is called
@@ -415,4 +416,5 @@ If B extends A then you can override a method in A through B with changing the r
 ---
 
 # Encapsulation and Abstraction:-
+ "The object need not to abstract that result in encapsulation" means that simply bundling data and methods into an object (encapsulation) does not automatically guarantee a high level of abstraction."
 ![r](images/AbstractionVsEncapsulation.png)
