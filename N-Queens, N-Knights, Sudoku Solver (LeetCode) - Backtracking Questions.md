@@ -227,7 +227,7 @@ boolean[][] board = new boolean[N][N];
 ```
 - you can eleminate for loops by increasing number of parameters in function call.
 ---
-# 2)N-Knights problem:-
+# 2)N-Knights problem:-In image it's started instead of starts
 ![o](images/N-Knights.png)​
 ```java
 import java.util.Arrays;
@@ -379,3 +379,155 @@ X X X
 X K X 
 K K K 
 ```
+# Knights Placement Complexity Analysis
+
+* **Time Complexity:** $O(2^{n^2})$
+    * For every cell on the $n \times n$ board, the algorithm makes two recursive choices: either place a knight or don't place a knight, leading to an exponential number of branches.
+
+
+
+* **Space Complexity:** $O(n^2)$
+    * The algorithm uses a 2D boolean array of size $n \times n$ and the recursion stack depth can reach $n^2$ as it visits every cell on the board.
+
+
+
+---
+
+#### Understanding the $2^{n^2}$ Logic
+- In your code, the total number of squares is $n \times n = n^2$ (for a 4x4 board, this is 16). At each square, the code explores two possibilities (the `if(isSafe)` branch and the "move ahead" branch). This results in a worst-case theoretical complexity of $2^{16}$ operations. While the `isSafe` check prevents many invalid placements, the mathematical upper bound is determined by these two choices per cell.
+---
+# 3)Sudoku Solver:-
+![t](images/Sudoku_solver_backtracking.png)
+```java
+import java.util.Arrays;
+public class Main {
+    public static void main(String[] args) {
+        int[][] board = {
+                {5, 3, 0, 0, 7, 0, 0, 0, 0},
+                {6, 0, 0, 1, 9, 5, 0, 0, 0},
+                {0, 9, 8, 0, 0, 0, 0, 6, 0},
+                {8, 0, 0, 0, 6, 0, 0, 0, 3},
+                {4, 0, 0, 8, 0, 3, 0, 0, 1},
+                {7, 0, 0, 0, 2, 0, 0, 0, 6},
+                {0, 6, 0, 0, 0, 0, 2, 8, 0},
+                {0, 0, 0, 4, 1, 9, 0, 0, 5},
+                {0, 0, 0, 0, 8, 0, 0, 7, 9}
+        };
+        if(solve(board)){
+            display(board);
+        }
+        else{
+            System.out.println("Cannot solve");
+        }
+    }
+
+    //Main recursive function
+    public static boolean solve(int[][] board) {
+        int n = board.length;
+        int row = -1;
+        int col = -1;
+        boolean emptyLeft = true;
+        //this nested loop is just to find which places are empty and if they are empty then save the row and col to check which number is safe to put that number over there.
+        //this is how we are placing r,c in an arguments by finding place which is empty i.e.(0, 2) in a recursive tree given in above image.
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                //can add no. only from 1-9
+                if (board[i][j] == 0) {
+                    row = i;
+                    col = j;
+                    emptyLeft = false;//i.e.mark it as filled as we are going to fill it using function call which we did in next nested for loop
+                    break;
+                }
+                //if you find an empty element in row,then break to call a function which will find number to place in it
+                if (emptyLeft == false) {
+                    break;
+                }
+            }
+        }
+        //if you don't find any empty element in a sudoku using above nested for loop that means sudoku is solved!!
+        if (emptyLeft == true) {
+            return true;
+        }
+        //backtrack, try to put all numbers from 1-9 in that empty cell
+        for (int i = 1; i <= 9; i++) {
+            if (isSafe(board, row, col, i)) {
+                board[row][col] = i;
+                if (solve(board)) {
+                    //i.e.if no empty element left after placing this number then return true
+                    //found the answer
+                    return true;
+                } else {
+                    //backtrack,i.e.whatever changes you made just remove those changes
+                    board[row][col] = 0;
+                }
+            }
+        }
+        return false;//even after checking all numbers from 1-9 for every cell,if still some cells remain empty as if you didn't able t put any number over there then you can't solve that sudoku, hence return false
+
+    }
+
+    public static boolean isSafe(int[][] board, int row, int col, int num) {
+        //check the row
+        for (int i = 0; i < board.length; i++) {
+            //check if the number is in the row
+            if (board[row][col] == num) {
+                return false;
+            }
+        }
+        //check for col
+        for (int i = 0; i < board[0].length; i++) {
+            if (board[row][col] == num) {
+                return false;
+            }
+        }
+        //check for grid
+        int sqrt = (int) (Math.sqrt(board.length));//to find out row length of each grid to check in a grid
+        int rowStart = row - (row % sqrt);//here,remainder will give us extra items which will come after a particular grid which will help us to eliminate those positions as given in figure above...
+        int colStart = col - (col % sqrt);
+        //0-based indexing is used.
+        for (int i = rowStart; i < rowStart + sqrt; i++) {
+            for (int j = colStart; j < colStart + sqrt; j++) {
+                if (board[i][j] == num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void display(int[][] board) {
+        for (int[] arr : board) {
+            for (int number : arr) {
+                System.out.print(number + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+o/p:-
+5 3 2 2 7 3 1 2 3 
+6 4 7 1 9 5 4 5 7 
+1 9 8 4 6 8 8 6 9 
+8 1 2 1 6 4 2 4 3 
+4 3 5 8 5 3 5 7 1 
+7 6 9 7 2 9 8 9 6 
+3 6 4 2 3 5 2 8 1 
+2 5 7 4 1 9 3 4 5 
+1 8 9 6 8 7 6 7 9
+```
+# Time & Space complexity of above Sudoku solver code:-
+# Sudoku Solver Complexity Analysis
+
+* **Time Complexity:** $O(n^{n^2})$,here T.C.:-O(9^(n^2))
+    * The algorithm tries up to $n$ possibilities for each of the $n^2$ cells, leading to an exponential number of recursive branches.
+
+
+* **Space Complexity:** $O(n^2)$
+    * The memory is used by the 2D board and the recursion stack, which can go as deep as the total number of cells ($n \times n$).
+
+
+
+---
+
+### Understanding the $n^2$ in the exponent
+In a $9 \times 9$ board, $n = 9$. The total number of squares is $n^2 = 81$. Since each square can technically hold any of the $n$ digits, the worst-case number of combinations the code might check is $9^{81}$. In practice, the `isSafe` check prunes most of these branches, but the theoretical limit remains exponential.
