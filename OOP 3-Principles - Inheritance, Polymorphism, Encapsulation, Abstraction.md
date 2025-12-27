@@ -82,38 +82,38 @@ If not written explicitly, Java calls it automatically
 8. super Keyword
 Used to:
 Call parent constructor
-Access parent variables
-Access parent methods
-Example Meaning:-
+- Access parent variables
+- Access parent methods
+- Example Meaning:-
 super.variable → parent variable
-super() → parent constructor
+- super() → parent constructor
 
 9. Access Modifiers & Inheritance
-private Keyword
-private members:
+- private Keyword
+- private members:
 ❌ NOT accessible in child class
-Even though child inherits the class, private data is hidden
+- Even though child inherits the class, private data is hidden
 
 Important Statement :-
 “Private members belong only to that class, not even child class can access them directly.”
 
 10. Reference Variable Concept (Important)
-Access depends on reference type, not object type
-Example meaning from video:
-Parent obj = new Child();
+- Access depends on reference type, not object type
+- Example meaning from video:
+- Parent obj = new Child();
 
 Accessible:
-Parent class members
+- Parent class members
 Not accessible:
-Child-specific members
+- Child-specific members
 
 11. Types of Inheritance (Video Mentions)
-Single Inheritance
-One parent → one child
-Most commonly used
-Fully supported in Java
-class A { }
-class B extends A { }
+*Single Inheritance
+- One parent → one child
+- Most commonly used
+- Fully supported in Java
+- class A { }
+- class B extends A { }
 
 # Key Points Repeated in Video
 - Inheritance promotes code reuse
@@ -129,9 +129,9 @@ class B extends A { }
 - Java supports single inheritance using classes
 
 Multiple Inheritance (Java)
-Multiple Inheritance means:
+*Multiple Inheritance means:
 One child class inherits from more than one parent class
-Example idea:
+*Example idea:
 Class C extends A, B   ❌ (Not allowed in Java)
 
 Why Multiple Inheritance is NOT Supported in Java (Classes):-
