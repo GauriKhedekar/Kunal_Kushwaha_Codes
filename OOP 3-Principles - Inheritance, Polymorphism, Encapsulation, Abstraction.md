@@ -217,7 +217,7 @@ It only needs to initialize the value unique to it: weight. This leaves Box free
 
 Thus, super( ) always refers to the superclass immediately above the calling class.
 This is true even in a multileveled hierarchy.
-
+```java
 class Box {
     private double width;
     private double height;
@@ -285,14 +285,17 @@ class Main {
         System.out.println("defaultBox weight: " + defaultBox.weight); // Prints "defaultBox weight: -1.0"
     }
 }
-
+o/p:-myBox weight: 34.3
+clonedBox weight: 34.3
+defaultBox weight: -1.0
+```
 Notice that super() is passed an object of type BoxWeight—not of type Box.This still invokes the constructor Box(Box ob).
 NOTE: A superclass variable can be used to reference any object derived from that class.
 Thus, we are able to pass a BoxWeight object to the Box constructor.Of course,Box only has knowledge of its own members.
 
 A Second Use for super
 The second form of super acts somewhat like this, except that it always refers to the superclass of the subclass in
-which it is used.
+which it is used.(member shouldn't be private here)
 
 super.member
 
