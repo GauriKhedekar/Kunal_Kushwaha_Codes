@@ -219,28 +219,71 @@ Thus, super( ) always refers to the superclass immediately above the calling cla
 This is true even in a multileveled hierarchy.
 
 class Box {
-     private double width;
-     private double height;
-     private double depth;
+    private double width;
+    private double height;
+    private double depth;
 
-     // construct clone of an object
+    // Default constructor for Box
+    Box() {
+        this.width = -1;
+        this.height = -1;
+        this.depth = -1;
+    }
 
-     Box(Box ob) { // pass object to constructor
-       width = ob.width;
-       height = ob.height;
-       depth = ob.depth;
-     }
+    // Constructor with dimensions
+    Box(double width, double height, double depth) {
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+    }
+
+    // Construct clone of an object (copy constructor)
+    Box(Box ob) { // pass object to constructor
+        width = ob.width;
+        height = ob.height;
+        depth = ob.depth;
+    }
 }
 
 class BoxWeight extends Box {
-     double weight; // weight of box
+    double weight; // weight of box
 
-     // construct clone of an object
+    // Default constructor for BoxWeight
+    BoxWeight() {
+        super(); // Call the default Box constructor
+        this.weight = -1;
+    }
 
-     BoxWeight(BoxWeight ob) { // pass object to constructor
-        super(ob);
+    // Constructor with dimensions and weight
+    BoxWeight(double width, double height, double depth, double weight) {
+        // Call the Box constructor with dimensions
+        super(width, height, depth); 
+        this.weight = weight;
+    }
+
+    // Construct clone of an object (copy constructor for BoxWeight)
+    BoxWeight(BoxWeight ob) { // pass object to constructor
+        super(ob); // Call the Box copy constructor
         weight = ob.weight;
-     }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        // 1. Calling the constructor with arguments
+        // Creates a BoxWeight object with specific width, height, depth, and weight
+        BoxWeight myBox = new BoxWeight(10, 20, 15, 34.3);
+        System.out.println("myBox weight: " + myBox.weight); // Prints "myBox weight: 34.3"
+
+        // 2. Calling the copy constructor
+        // Creates a new object 'clonedBox' by copying properties from 'myBox'
+        BoxWeight clonedBox = new BoxWeight(myBox);
+        System.out.println("clonedBox weight: " + clonedBox.weight); // Prints "clonedBox weight: 34.3"
+
+        // 3. Calling the default constructor
+        BoxWeight defaultBox = new BoxWeight();
+        System.out.println("defaultBox weight: " + defaultBox.weight); // Prints "defaultBox weight: -1.0"
+    }
 }
 
 Notice that super() is passed an object of type BoxWeight—not of type Box.This still invokes the constructor Box(Box ob).
