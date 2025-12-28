@@ -227,7 +227,7 @@ boolean[][] board = new boolean[N][N];
 ```
 - you can eleminate for loops by increasing number of parameters in function call.
 ---
-# 2)N-Knights problem:-In image it's started instead of starts
+# 2)N-Knights problem:-In an image it's 'started' instead of 'starts'
 ![o](images/N-Knights.png)​
 ```java
 import java.util.Arrays;
@@ -482,7 +482,7 @@ public class Main {
         }
         //check for grid
         int sqrt = (int) (Math.sqrt(board.length));//to find out row length of each grid to check in a grid
-        int rowStart = row - (row % sqrt);//here,remainder will give us extra items which will come after a particular grid which will help us to eliminate those positions as given in figure above...
+        int rowStart = row - (row % sqrt);//here,remainder will give us extra items which will come after a particular gridStart which will help us to eliminate those positions as given in figure above...
         int colStart = col - (col % sqrt);
         //0-based indexing is used.
         for (int i = rowStart; i < rowStart + sqrt; i++) {
