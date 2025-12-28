@@ -279,6 +279,7 @@ class Main {
         // Creates a new object 'clonedBox' by copying properties from 'myBox'
         BoxWeight clonedBox = new BoxWeight(myBox);
         System.out.println("clonedBox weight: " + clonedBox.weight); // Prints "clonedBox weight: 34.3"
+        System.out.println("clonedBox width: " + clonedBox.width);//compile-time error,as width is a private instance var.in parent class hence you can't access it in Main class or in any other class than parent class ,not even using methods.
 
         // 3. Calling the default constructor
         BoxWeight defaultBox = new BoxWeight();
