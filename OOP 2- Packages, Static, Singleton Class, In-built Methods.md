@@ -173,7 +173,8 @@ Provide a public static method
 
 # Java Codes of it:-
 🧩 1️⃣ Eager Initialization (Simple & Common)
-📌 Object created at class loading time
+📌 Object created at class loading time,
+The Singleton object created message prints only once because in the provided code, the constructor is called during the initial static initialization of the class, not when getInstance() is called subsequently. This static instance, instance, is reused for both s1 and s2 references, ensuring only a single object is ever instantiated. hence "Singleton object created" printed only once.
 ```java
 class Singleton {
 
@@ -200,6 +201,9 @@ public class Main {
         System.out.println(s1 == s2); // true
     }
 }
+o/p:-
+Singleton object created
+true
 ```
 
 📌 Only one object is created
