@@ -442,7 +442,7 @@ then the method in the subclass is said to override the method in the superclass
 from within its subclass, it will always refer to the version of that method defined by the subclass. The version of the
 method defined by the superclass will be hidden.
 
-Method overriding occurs only when the names and the type signatures of the two methods are identical.
+Method overriding occurs only when the return types and the type signatures of the two methods are identical.
 If they are not, then the two methods are simply overloaded.
 
 (Check display functions in box classes)
@@ -458,7 +458,8 @@ made at run time.
 In other words, it is the type of the object being referred to (not the type of the reference variable)
 that determines which version of an overridden method will be executed.
 
-If B extends A then you can override a method in A through B with changing the return type of method to B.
+- If B extends A then you can override a method in A through B with changing the return type of method to B:-
+In Java, when class B extends class A, you can override a method in A within B with a different return type only if the new return type is a subtype of the original return type (covariate return types). The ability to change the return type to class B (assuming B extends the original return type) while overriding is possible because B is considered a more specific return type. 
 
 ---
 
