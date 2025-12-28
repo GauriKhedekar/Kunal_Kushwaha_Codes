@@ -29,6 +29,16 @@ Thus, if your package is in a subdirectory of the current directory, it will be 
 When a package is imported, only those items within the package declared as public will be available to non-subclasses
 in the importing code.
 
+## Summary of Syntax
+- The general syntax to import class or method from another package is:
+```java
+import com.fully.qualified.PackageName.ClassName;
+```
+- or for static imports:
+```java
+import static com.fully.qualified.PackageName.ClassName.methodName;
+```
+
 ---
 # Static Keyword:-
 Understanding static:
