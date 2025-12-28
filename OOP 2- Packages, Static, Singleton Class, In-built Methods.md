@@ -221,9 +221,9 @@ class Singleton {
 
     public static Singleton getInstance() {
         if (instance == null) {
-            instance = new Singleton();
+            instance = new Singleton();//create an instance/object if not created.
         }
-        return instance;
+        return instance;//otherwise return the same instance if instance(object ref declared within class) is not null/created earlier.
     }
 }
 ```
