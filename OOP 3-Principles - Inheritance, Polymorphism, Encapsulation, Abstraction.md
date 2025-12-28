@@ -137,7 +137,7 @@ Class C extends A, B   ❌ (Not allowed in Java)
 Why Multiple Inheritance is NOT Supported in Java (Classes):-
 - Causes ambiguity problem
 - If both parent classes have:
-Same method name, Same signature(if they share the same method name and the exact same parameter list (same number, type, and order of parameters). The return type and access modifiers are not considered part of the method signature for this purpose.),same return type.
+Same signature(if they share the same method name and the exact same parameter list (same number, type, and order of parameters). The return type and access modifiers are not considered part of the method signature for this purpose.),same return type.
 → Java cannot decide which method to call
 - This is called:
 Diamond Problem, Leads to conflicts
