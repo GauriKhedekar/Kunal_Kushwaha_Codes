@@ -199,7 +199,7 @@ those parts of the object defined by the superclass.
 plainbox      =  weightbox;
 (superclass)     (subclass)
 
-SUPERCLASS ref = new SUBCLASS();    // HERE ref can only access methods which are available in SUPERCLASS
+SUPERCLASS ref = new SUBCLASS();    // HERE ref can only access methods which are available in SUPERCLASS,In overriding ,the method is over-riden only when it is available in parent class as well ,if its not available in parent class that means its not over-riden and only related to sub-class and not superclass ,in this case as that method is not a part of superclass hence you cant access it in above ex. as ref var. is of type Superclass and it will decide which members the created obj can access and obj type will determine which method to call.(but you can call child-class specific method if ref var is of type subclass).otherwise you can only call methods which are there in parent class/superclass but which version of method to call will be decided by subclass(In above example).
 
 Using super:
 Whenever a subclass needs to refer to its immediate superclass, it can do so by use of the keyword super.
