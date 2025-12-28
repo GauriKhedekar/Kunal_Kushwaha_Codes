@@ -264,7 +264,7 @@ public class Main {
             //if current row and col are not safe to place a Knight just move ahead
             Knights(board, row, col + 1, knights);
         }
-        //to check whether a position which we are using to check whether Knight exist there or not valid / not?otherwise if we are trying to access element which is out of bounds it will give IOBE hence use isValid() to avoid IOBE...
+        //to check whether a position which we are using to check whether Knight exist there or not is valid / not?otherwise if we are trying to access element which is out of bounds it will give IOBE hence use isValid() to avoid IOBE...
        public static boolean isValid(boolean[][] board, int row, int col){
          return row >= 0 && row < board.length && col >= 0 && col < board[0].length;
        }
@@ -470,13 +470,13 @@ public class Main {
         //check the row
         for (int i = 0; i < board.length; i++) {
             //check if the number is in the row
-            if (board[row][col] == num) {
+            if (board[row][i] == num) {
                 return false;
             }
         }
         //check for col
         for (int i = 0; i < board[0].length; i++) {
-            if (board[row][col] == num) {
+            if (board[i][col] == num) {
                 return false;
             }
         }
