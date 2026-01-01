@@ -364,9 +364,9 @@ Example:
 1️⃣ Built-in Annotations
 
 These are provided by Java.
-```java
-🔸 @Override
-```
+
+- 🔸 @Override
+
 Ensures method correctly overrides parent method
 
 Gives compile-time error if method signature is wrong
@@ -383,9 +383,8 @@ class Child extends Parent {
 ```
 ✔ Prevents mistakes
 ✔ Improves code safety
-```java
-🔸 @Deprecated
-```
+
+- 🔸 @Deprecated
 Marks method/class as old
 
 Compiler gives warning
@@ -402,7 +401,7 @@ Better alternative exists/
 
 Method will be removed in future
 
-🔸 @SuppressWarnings
+- 🔸 @SuppressWarnings
 
 Suppresses compiler warnings
 ```java
@@ -417,7 +416,7 @@ Common values:
 
 "rawtypes"
 
-🔸 @FunctionalInterface
+- 🔸 @FunctionalInterface
 
 Ensures interface has only one abstract method
 
@@ -435,7 +434,7 @@ interface Test {
 
 Meta-annotations are annotations used on other annotations.
 
-🔸 @Target
+- 🔸 @Target
 
 Defines where annotation can be applied.
 ```java
@@ -454,7 +453,7 @@ CONSTRUCTOR
 
 PARAMETER
 
-🔸 @Retention
+- 🔸 @Retention
 
 Defines how long annotation is available.
 ```java
@@ -464,14 +463,14 @@ Defines how long annotation is available.
 - SOURCE-Source code only
 - CLASS-Bytecode
 - RUNTIME- Runtime (JVM)
-🔸 @Documented
+  -🔸 @Documented
 
 Annotation appears in JavaDoc
 
 ```java
 @Documented
 ```
-🔸 @Inherited
+- 🔸 @Inherited
 
 Child class inherits annotation from parent class
 ```java
