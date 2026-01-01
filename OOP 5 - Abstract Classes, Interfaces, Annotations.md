@@ -189,6 +189,129 @@ i.e. static interface methods should have a body! They cannot be abstract.
 
 NOTE : when overriding methods, the access modifier should be same or better i.e. if in Parent Class it was protected, then then overridden should be either protected or public.
 
+# Imp example:-
+📌 Interfaces in Java – Engine, Media, Brake (Car Example):-
+Suppose we have multiple interfaces with same method names:
+```java
+interface Engine {
+    void start();
+    void stop();
+}
+
+interface Media {
+    void start();
+    void stop();
+}
+
+interface Brake {
+    void brake();
+}
+// Car class implementing BOTH Engine & Media
+class Car implements Engine, Media {
+
+    @Override
+    public void start() {
+        System.out.println("Car started (Engine + Media together)");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Car stopped (Engine + Media together)");
+    }
+}
+
+// Using car.start()
+public class Main {
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.start();   // Which start? Engine or Media?->Car started (Engine + Media together)
+    }
+}
+```
+If one class implements both Engine and Media, calling:
+car.start();
+* Ambiguous meaning
+- Should it start engine ❓
+-Or start media system ❓
+- Java does NOT know which behavior you want logically, even though method signatures match.
+```java
+// Interfaces
+interface Engine {
+    void start();
+    void stop();
+}
+
+interface Media {
+    void start();
+    void stop();
+}
+
+interface Brake {
+    void brake();
+}
+
+// Engine implementation
+class PowerEngine implements Engine {
+    public void start() {
+        System.out.println("Engine started");
+    }
+    public void stop() {
+        System.out.println("Engine stopped");
+    }
+}
+
+// Media implementation
+class MusicPlayer implements Media {
+    public void start() {
+        System.out.println("Music started");
+    }
+    public void stop() {
+        System.out.println("Music stopped");
+    }
+}
+
+// Interface extending interface
+interface AdvancedEngine extends Engine {
+    void turbo();
+}
+
+// Using composition (BEST DESIGN)
+class NiceCar {
+    private Engine engine;
+    private Media media;
+
+    NiceCar() {
+        engine = new PowerEngine();
+        media = new MusicPlayer();
+    }
+
+    void startEngine() {
+        engine.start();
+    }
+
+    void stopEngine() {
+        engine.stop();
+    }
+
+    void startMedia() {
+        media.start();
+    }
+
+    void stopMedia() {
+        media.stop();
+    }
+}
+
+// Main class
+public class Main {
+    public static void main(String[] args) {
+        NiceCar car = new NiceCar();
+        car.startEngine(); // Engine started
+        car.startMedia();  // Music started
+    }
+}
+```
+
 # Annotations:-
 📌 Java Annotations – Complete Notes
 🔹 What are Annotations in Java?
