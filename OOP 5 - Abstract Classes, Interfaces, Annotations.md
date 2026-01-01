@@ -46,7 +46,7 @@ An abstract class may contain non-final variables.
 
 Type of variables:
 Abstract class can have final, non-final, static and non-static variables.
-Interface has only static and final variables.
+Interface has only static and final variables.(hence you have to intialize declared variable anyway.)
 
 Implementation:
 Abstract class can provide the implementation of interface.
@@ -58,11 +58,11 @@ and abstract class can be extended using keyword “extends”.
 
 Multiple implementation:
 An interface can extend another Java interface only,
-an abstract class can extend another Java class and implement multiple Java interfaces.
+an abstract class can extend another Java class and implement(i.e.extend) multiple Java interfaces.
 
 Accessibility of Data Members:
-Members of a Java interface are public by default.
-A Java abstract class can have class members like private, protected, etc.
+Members of a Java interface are public by default.(as if you declare them as private then you can't use those in their child classes,and even if you can use them in that interface what's the point of using them as interfaces can have only var and not body of any function->hence private members are not allowed in interfaces)
+A Java abstract class can have class members like private, protected, etc.(as abstract class can have methods having concrete body,hence you can use those and access those private variables in the same class and can make some use of it..)
 
 # Interfaces:-
 Multiple inheritance is not available in java.
@@ -89,7 +89,11 @@ A class can implement more than one interface. By contrast, a class can only inh
 Using the keyword interface, you can fully abstract a class’ interface from its implementation.
 That is, using interface, you can specify what a class must do, but not how it does it.
 
-Interfaces are syntactically similar to classes, but they lack instance variables, and, as a general rule,
+Interfaces are syntactically similar to classes, but they lack instance variables(
+- static variable → ❌ NOT an instance variable
+- final variable → ✅ CAN be an instance variable
+- static final variable → ❌ NOT an instance variable
+), and, as a general rule,
 their methods are declared without any body.
 
 By providing the interface keyword, Java allows you to fully utilize the “one interface, multiple methods”
@@ -103,6 +107,9 @@ and higher in the class hierarchy so that the mechanisms will be available to mo
 designed to avoid this problem. They disconnect the definition of a method or set of methods from the inheritance
 hierarchy. Since interfaces are in a different hierarchy from classes, it is possible for classes that are unrelated
 in terms of the class hierarchy to implement the same interface. This is where the real power of interfaces is realized.
+- e.g.A obj = new B();-> obj.start();
+- e.g.Engine car = new PowerEngine();
+-In short you need ref type(superclass-A) and obj type(subclass-B) classes at compile time in order to call overriden methods,to resolve whether over-riden methods have same signature or not? but in interfaces ref type class needs should resolve at compile time(Engine car) and we know that all the methods in an parent class have been over-riden by child child class for sure hence no need to have child class at the same time as obj type(new PowerEngine()) will get resolved at runtime in Interfaces)
 
 Beginning with JDK 8, it is possible to add a default implementation to an interface method.
 Thus, it is now possible for interface to specify some behavior.However, default methods constitute what is, in essence,
@@ -125,7 +132,7 @@ When you call a method through one of these references, the correct version will
 of the interface being referred to. Called at run time by the type of object it refers to.
 The method to be executed is looked up dynamically at run time, allowing classes to be created later than the code which
 calls methods on them.
-The calling code can dispatch through an interface without having to know anything about the “callee.”
+The calling code can dispatch through an interface without having to know anything about the “callee.” (callee-obj type class or RHS)
 
 CAUTION: Because dynamic lookup of a method at run time incurs a significant overhead when compared with the normal
 method invocation in Java, you should be careful not to use interfaces casually in performance-critical code.
@@ -187,7 +194,7 @@ interface’s version of the method takes precedence.
 NOTE: static interface methods are not inherited by either an implementing class or a subinterface.
 i.e. static interface methods should have a body! They cannot be abstract. 
 
-NOTE : when overriding methods, the access modifier should be same or better i.e. if in Parent Class it was protected, then then overridden should be either protected or public.
+NOTE : when overriding methods, the access modifier should be same or better i.e. if in Parent Class it was protected, then overridden should be either protected or public.
 
 # Imp example:-
 📌 Interfaces in Java – Engine, Media, Brake (Car Example):-
@@ -231,8 +238,8 @@ public class Main {
 If one class implements both Engine and Media, calling:
 car.start();
 * Ambiguous meaning
-- Should it start engine ❓
--Or start media system ❓
+- Should it start "engine" ❓
+-Or start "media system" ❓
 - Java does NOT know which behavior you want logically, even though method signatures match.
 ```java
 // Interfaces
@@ -313,7 +320,7 @@ public class Main {
 ```
 
 # Annotations:-
-📌 Java Annotations – Complete Notes
+📌 Java Annotations – 
 🔹 What are Annotations in Java?
 
 Annotations are metadata added to Java code that provide extra information to:
@@ -340,13 +347,14 @@ To provide instructions to compiler / framework
 To improve code readability and maintainability
 
 🔹 Syntax of Annotation
+```java
 @AnnotationName
-
+```
 
 Example:
-
+```java
 @Override
-
+```
 🔹 Types of Annotations in Java
 
 1️⃣ Built-in Annotations
@@ -356,13 +364,13 @@ Example:
 1️⃣ Built-in Annotations
 
 These are provided by Java.
-
+```java
 🔸 @Override
-
+```
 Ensures method correctly overrides parent method
 
 Gives compile-time error if method signature is wrong
-
+```java
 class Parent {
     void show() {}
 }
@@ -372,34 +380,34 @@ class Child extends Parent {
     void show() {}
 }
 
-
+```
 ✔ Prevents mistakes
 ✔ Improves code safety
-
+```java
 🔸 @Deprecated
-
+```
 Marks method/class as old
 
 Compiler gives warning
 
 Still works, but not recommended
-
+```java
 @Deprecated
 void oldMethod() {}
-
+```
 
 Used when:
 
-Better alternative exists
+Better alternative exists/
 
 Method will be removed in future
 
 🔸 @SuppressWarnings
 
 Suppresses compiler warnings
-
+```java
 @SuppressWarnings("unchecked")
-
+```
 
 Common values:
 
@@ -414,12 +422,12 @@ Common values:
 Ensures interface has only one abstract method
 
 Used in Lambda Expressions
-
+```java
 @FunctionalInterface
 interface Test {
     void show();
 }
-
+```
 
 ❌ More than one abstract method → compile-time error
 
@@ -430,9 +438,9 @@ Meta-annotations are annotations used on other annotations.
 🔸 @Target
 
 Defines where annotation can be applied.
-
+```java
 @Target(ElementType.METHOD)
-
+```
 
 Common values:
 
@@ -449,59 +457,64 @@ PARAMETER
 🔸 @Retention
 
 Defines how long annotation is available.
-
+```java
 @Retention(RetentionPolicy.RUNTIME)
-
-Policy	Available Till
-SOURCE	Source code only
-CLASS	Bytecode
-RUNTIME	Runtime (JVM)
+```
+- Policy-Available Till
+- SOURCE-Source code only
+- CLASS-Bytecode
+- RUNTIME- Runtime (JVM)
 🔸 @Documented
 
 Annotation appears in JavaDoc
 
+```java
 @Documented
-
+```
 🔸 @Inherited
 
 Child class inherits annotation from parent class
-
+```java
 @Inherited
-
+```
 3️⃣ Custom Annotations (User-Defined)
 
 You can create your own annotation.
 
 🔹 Syntax to Create Annotation
+```java
 @interface MyAnnotation {
     String value();
 }
-
+```
 
 Usage:
-
+```java
 @MyAnnotation(value = "Hello")
 class Test {}
-
+```
 🔹 Annotation with Default Value
+```java
 @interface Info {
     String name() default "Java";
 }
-
+```
 
 Usage:
-
+```java
 @Info
 class Demo {}
-
+```
 🔹 Annotations with Methods (Elements)
+```java
 @interface Details {
     int id();
     String name();
 }
-
+```
 
 Usage:
-
+```java
 @Details(id = 1, name = "Gauri")
 class Student {}
+```
