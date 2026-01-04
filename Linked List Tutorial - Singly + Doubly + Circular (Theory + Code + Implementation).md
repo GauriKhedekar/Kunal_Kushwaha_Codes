@@ -45,12 +45,21 @@ private class Node {
 6. Head & Tail
 - Head → first node
 - Tail → last node
+##### Data Members(head and tail)
+- Store the reference of the first node in head.
+- Store the reference of the last node in tail.
+- Maintain the total number of nodes using size.
 ```java
 private Node head;
 private Node tail;
 private int size;
 ```
 7. Insert at First (O(1))
+- Create a new node with the given value.
+- Assign the current head reference to the new node’s next.
+- Move head to point to the new node.
+- If the list was empty, assign tail to head.
+- Increment size.
 ```java
 public void insertFirst(int value) {
     Node node = new Node(value);
@@ -64,6 +73,12 @@ public void insertFirst(int value) {
 }
 ```
 8. Insert at Last (O(1) using tail)
+- Check whether the list is empty.
+- If empty, perform insertion at first and stop.
+- Create a new node with the given value.
+- Assign the current tail’s next reference to the new node.
+- Move tail to point to the new node.
+- Increment size.
 ```java
 public void insertLast(int value) {
     if (tail == null) {
@@ -77,6 +92,15 @@ public void insertLast(int value) {
 }
 ```
 9. Insert at Index (O(n))
+- Check whether index is zero.
+- If zero, perform insertion at first and stop.
+- Check whether index equals size.
+- If yes, perform insertion at last and stop.
+- Start traversal from head.
+- Move forward until reaching the node just before the given index.
+- Create a new node and assign its next to the current node’s next.
+- Update the current node’s next to the new node.
+- Increment size.
 ```java
 public void insert(int value, int index) {
     if (index == 0) {
@@ -99,8 +123,12 @@ public void insert(int value, int index) {
 }
 ```
 10. Display Linked List:-
-
-⚠️ Never move head
+- Create a temporary reference and assign it to head.
+- Print the value of the current node.
+- Move the temporary reference to the next node.
+- Repeat until the temporary reference becomes null.
+- Print END.
+⚠️ Never move head during transversal.
 ```java
 public void display() {
     Node temp = head;
@@ -112,6 +140,12 @@ public void display() {
 }
 ```
 11. Delete First (O(1))
+- Store the value of the head node.
+- Move head to the next node.
+- Check whether head becomes null.
+- If yes, assign tail to null.
+- Decrement size.
+- Return the stored value.
 ```java
 public int deleteFirst() {
     int value = head.value;
@@ -125,6 +159,15 @@ public int deleteFirst() {
 }
 ```
 12. Delete Last (O(n))
+- Check whether the list contains only one node.
+- If yes, perform delete-first and stop.
+- Start traversal from head.
+- Move forward until reaching the second-last node.
+- Store the value of the tail node.
+- Move tail to the second-last node.
+- Assign tail’s next to null.
+- Decrement size.
+- Return the stored value.
 ```java
 public int deleteLast() {
     if (size <= 1) {
@@ -144,6 +187,16 @@ public int deleteLast() {
 }
 ```
 13. Delete at Index (O(n))
+- Check whether index is zero.
+- If zero, perform delete-first and stop.
+- Check whether index is the last position.
+- If yes, perform delete-last and stop.
+- Start traversal from head.
+- Move forward until reaching the node just before the index.
+- Store the value of the node to be deleted.
+- Update the next reference to skip the target node.
+- Decrement size.
+- Return the stored value.
 ```java
 public int delete(int index) {
     if (index == 0) {
@@ -165,6 +218,9 @@ public int delete(int index) {
 }
 ```
 14. Get Node at Index
+- Start traversal from head.
+- Move forward index number of times.
+- Return the node reference at that position.
 ```java
 public Node get(int index) {
     Node temp = head;
@@ -175,6 +231,12 @@ public Node get(int index) {
 }
 ```
 15. Find a Value
+- Start traversal from head.
+- Compare the current node’s value with the target value.
+- Return the node reference if a match is found.
+- Move to the next node.
+- Repeat until traversal ends.
+- Return null if the value is not found.
 ```java
 public Node find(int value) {
     Node node = head;
