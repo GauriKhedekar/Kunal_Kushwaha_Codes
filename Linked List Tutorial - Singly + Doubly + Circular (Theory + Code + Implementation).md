@@ -550,3 +550,495 @@ public void delete(int value) {
 ⏱ Time Complexity: O(n)
 
 ---
+# My Codes + Notes:-(Even if you read my notes + kuanl kushwaha class notes(white board notes) = enough)(else you can read elaborated explanation(chatgpt notes) if you are not understanding my notes)
+#### Singly LinkedList Implementation from Scratch:-first apply dot operator on node like node.next etc and then on next and prev nodes.
+![p](images/SLL_1.jpg)
+![r](images/SLL_2.jpg)
+![u](images/SLL_3.jpg)
+```java
+package LinkedList;
+
+public class SinglyLinkedList {
+
+    // Reference to the first node of the linked list
+    private Node head;
+
+    // Reference to the last node of the linked list
+    private Node tail;
+
+    // Stores the total number of nodes in the linked list
+    private int size;
+
+    // Constructor to initialize an empty Singly linked list
+    public SinglyLinkedList() {
+        this.size = 0;
+        // head and tail are null by default
+    }
+    //Inserting at first position before head in Singly Linked List
+    public void insertFirst(int val){
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+        if(tail == null){
+            tail = head;
+        }
+        size += 1;//to increase size of Linked List by 1
+    }
+    //Display LinkedList
+    public void display(){
+        Node temp;
+        temp = head;
+        while(temp != null){
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.print("END");
+        System.out.println();
+    }
+    //Insert at Last position(using tail):-O(1)
+    public void insertLast(int val){
+        if(tail == null){
+            this.insertFirst(val);
+            return;//as if tail == null => tail.next = null.next => will give NullPointerException
+            //You can't use dot operator for null.
+                    }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size += 1;
+    }
+    //Insert at particular index:-O(n)
+    public void insert(int val, int index){
+         if(index == 0){
+             insertFirst(val);
+             return;
+         }
+         if(index == size){
+             insertLast(val);
+             return;
+         }
+         //start checking from head
+         Node temp = head;//head is at 0th index.therefore temp is already at head hence start temp. from 1st index inside for loop,at during first iteration we are assigning temp to 1st index hence i should be 1 at that time.
+         //if index is 3 then go till 2nd index to set element at 3rd index by doing temp.next = node;
+        for(int i = 1; i < index; i++){
+             temp = temp.next;
+        }
+        Node node = new Node(val, temp.next);//current.next = temp.next as second parameter is taking ref var.pointing to next Node of temp Node.
+        //now next Node of node will automatically set to temp.next using constructor now we only need to set previous node of node(i.e. of newNode)
+        temp.next = node;
+        size += 1;
+    }
+    //DeleteFirst :- O(1)
+     public int deleteFirst(){
+        int val = head.value;
+        head = head.next;
+        if(head == null){
+            tail = null;
+        }
+        size -= 1;
+        return val;
+     }
+    //DeleteLast :- O(1)
+    public int deleteLast(){
+        if(size <= 1){
+            return deleteFirst();
+        }
+        int val = tail.value;
+        Node secondLastNode = get(size - 2);//to get Node which is just before tail Node
+        tail = secondLastNode;
+        tail.next = null;//ref var. pointing to previous last item(that arrow) and last item will be removed by Garbage collector.
+        size -= 1;
+        return val;
+    }
+    //Delete a particular node :- O(1)
+    public int Delete(int index){
+        if(index == 0){
+            return deleteFirst();
+        }
+        if(index == size - 1){
+            return deleteLast();
+        }
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+        prev.next = prev.next.next;
+        size -= 1;
+        return val;
+    }
+    //to get the node having particular value passed as parameter.
+    public Node find(int val){
+        Node node = head;
+        while(node != null) {
+            if (node.value == val) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    //to get/set ref.var pointing to the node which is at particular that index.
+    public Node get(int index){
+        Node node = head;
+        for(int i = 1; i <= index; i++){
+            node = node.next;
+        }
+        return node;
+    }
+
+    // Inner class representing a single node of the linked list
+    private class Node {
+
+        // Value stored in the current node
+        private int value;
+
+        // Reference variable pointing to the next node
+        private Node next;
+
+        // Constructor that initializes the node with a value
+        // Since next is not provided, it points to null by default
+        public Node(int value) {
+            this.value = value;
+            // next is automatically set to null
+        }
+
+        // Constructor that initializes both value and next reference
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next; // Explicitly assigning the next node(i.e.assigning ref. var to next Node)
+        }
+    }
+}
+```
+Main.java
+```java
+package LinkedList;
+
+public class Main {
+    public static void main(String[] args){
+        SinglyLinkedList list = new SinglyLinkedList();
+        //Insert at first position->O(1)
+        list.insertFirst(3);
+        list.insertFirst(4);
+        list.insertFirst(5);
+        //display Singly LinkedList ->O(n)
+        list.display();
+        //Insert at last position
+        list.insertLast(14);
+        list.display();
+        //Insert at particular position
+        list.insert(90, 2);
+        list.display();
+        //delete first Node
+        System.out.println(list.deleteFirst());
+        list.display();
+        //delete last Node
+        System.out.println(list.deleteLast());
+        list.display();
+        System.out.println(list.Delete(2));
+        list.display();
+        //display Node having value 90.
+        System.out.println(list.find(90));
+
+    }
+}
+o/p:-
+5 -> 4 -> 3 -> END
+5 -> 4 -> 3 -> 14 -> END
+5 -> 4 -> 90 -> 3 -> 14 -> END
+5
+4 -> 90 -> 3 -> 14 -> END
+14
+4 -> 90 -> 3 -> END
+3
+4 -> 90 -> END
+LinkedList.SinglyLinkedList$Node@34a245ab
+```
+---
+#### Doubly LinkedList Implementation from Scratch-
+![w](images/DLL_1.jpg)
+```java
+package LinkedList;
+
+public class DoublyLinkedList {
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public DoublyLinkedList(){
+        this.size = 0;
+    }
+
+    public void insertFirst(int value){
+        Node node = new Node(value);
+        node.next = head;
+        node.prev = null;
+        if(head != null){
+            head.prev = node;
+        }
+        head = node;
+        if(tail == null){
+            tail = head;
+        }
+        size++;
+    }
+    //InsertLast :- O(1)
+    // Insert at Last : O(n)
+    public void insertLast(int value) {
+        Node node = new Node(value);
+
+        // If list is empty
+        if (head == null) {
+            node.prev = null;
+            node.next = null;
+            head = node;
+            size++;
+            return;
+        }
+
+        // Traverse to find last node
+        Node last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        // Link new node at the end
+        last.next = node;
+        node.prev = last;
+        node.next = null;
+
+        size++;
+    }
+    //Insert after a particular node if value of that node is given:- O(n)
+    public void insert(int after, int value){
+        Node p = find(after);
+        if(p == null){
+            System.out.println("Node having value " + after + " doesn't exist");
+            return;
+        }
+        Node node = new Node(value);
+        node.next = p.next;
+        node.prev = p;
+        //if you are using dot operator on existing ref. var other than node then check for NullPointerException
+        if(p.next != null){
+            p.next.prev = node;
+        }
+        else{
+            insertLast(value);
+        }
+        p.next = node;
+        size++;
+    }
+
+    //to display DLL
+    public void display(){
+        Node node = head;
+        Node last = null;
+        while(node != null){
+            System.out.print(node.value + " -> ");
+            node = node.next;
+        }
+        System.out.print("END");
+        System.out.println();
+    }
+    //to display DLL in Reverse order(using tail)
+    public void displayRev(){
+        Node node = tail;
+        while(node != null){
+            System.out.print(node.value + " -> ");
+            node = node.prev;
+        }
+        System.out.print("START");
+        System.out.println();
+    }
+    //to display DLL in Reverse order(using last ref var./Node)
+    public void displayRevUsinglast(){
+        //used first while loop to find tail = last Node/ref var. pointing to last Node
+        Node node = head;
+        Node last = null;
+        while(node != null){
+            last = node;
+            node = node.next;
+        }
+        //to print DLL using last ref var.
+        while(last != null){
+            System.out.print(last.value + " -> ");
+            last = last.prev;
+        }
+        System.out.print("START");
+        System.out.println();
+    }
+    //to get the node having particular value passed as parameter.
+    public Node find(int val){
+        Node node = head;
+        while(node != null) {
+            if (node.value == val) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+
+
+
+      private class Node{
+          int value;
+          Node next;
+          Node prev;
+
+          public Node(int value){
+              this.value = value;
+          }
+
+          public Node(int value, Node next, Node prev){
+              this.value = value;
+              this.next = next;
+              this.prev = prev;
+          }
+      }
+
+
+}
+```
+Main.java
+```java
+package LinkedList;
+
+public class Main {
+    public static void main(String[] args){
+        DoublyLinkedList list = new DoublyLinkedList();
+        //Insert at first position->O(1)
+        list.insertFirst(3);
+        list.insertFirst(4);
+        list.insertFirst(5);
+        //display Doubly LinkedList ->O(n)
+        list.display();
+        //display Doubly LinkedList in Reverse Order using tail->O(n)
+        list.displayRev();
+        //display Doubly LinkedList in Reverse Order without using tail->O(n)
+        list.displayRevUsinglast();
+        //InsertLast:-O(1)
+        list.insertLast(14);
+        list.display();
+        //Insert after a certain node having value given as first parameter(after) in insert()
+        list.insert(4, 15);
+        list.display();
+
+
+    }
+}
+o/p:-
+5 -> 4 -> 3 -> END
+3 -> 4 -> 5 -> START
+3 -> 4 -> 5 -> START
+5 -> 4 -> 3 -> 14 -> END
+5 -> 4 -> 15 -> 3 -> 14 -> END
+```
+#### Circular LinkedList Implementation from Scratch:-
+![y](images/CLL_1.jpg)
+```java
+package LinkedList;
+
+public class CircularLinkedList {
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public CircularLinkedList(){
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+    //InsertFirst/InsertLast:- O(1)
+    public void insert(int value){
+        Node node = new Node(value);
+        if(head == null){
+            head = node;
+            tail = node;
+            return;
+        }
+        node.next = head;
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+    //Display CLL
+    public void display(){
+        Node node = head;
+        if(head != null){
+            do{
+                System.out.print(node.value + " -> ");
+                node = node.next;
+            }while(node != head);
+        }
+        System.out.println("HEAD");
+    }
+    //Delete a particular value
+    public void delete(int value){
+        Node node = head;
+        if(node == null){
+            return;
+        }
+        if(node.value == value){
+            head.next = head;
+            tail.next = head;
+            return;
+        }
+        do{
+            Node n = node.next;
+            if(n.value == value){
+                node.next = n.next;
+                return;
+            }
+            node = node.next;
+        }while(node != head);
+        //otherwise
+        System.out.println("Value that you want to delete Doesn't exist");
+
+    }
+    
+      private class Node{
+          int value;
+          Node next;
+
+
+          public Node(int value){
+              this.value = value;
+          }
+
+          public Node(int value, Node next){
+              this.value = value;
+              this.next = next;
+          }
+      }
+
+
+}
+```
+Main.java
+```java
+package LinkedList;
+
+public class Main {
+    public static void main(String[] args){
+        CircularLinkedList list = new CircularLinkedList();
+        //Insert at first position->O(1)
+        list.insert(3);
+        list.insert(4);
+        list.insert(5);
+        //display Doubly LinkedList ->O(n)
+        list.display();
+        //delete 4
+        list.delete(4);
+        list.display();
+
+
+
+    }
+}
+o/p:-
+3 -> 4 -> 5 -> HEAD
+3 -> 5 -> HEAD
+```
+---
