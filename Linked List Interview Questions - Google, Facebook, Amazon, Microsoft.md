@@ -164,4 +164,174 @@ Input: head = [3,2,0,-4], pos = 1
 Output: true
 Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
 ```
-#### Q5)
+#### Q5)Find length of linked-List cycle:-
+```java
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public int len(ListNode head) {
+        ListNode fast = head;//This will move 2 steps ahead in each iteration
+        ListNode slow = head;//This will move 1 step ahead in each iteration
+
+        while(fast != null && fast.next != null){
+             slow = slow.next;
+             fast = fast.next.next;
+             //when fast & slow pointer meet each other that means cycle is detected.
+             if(fast == slow){
+               ListNode temp = slow;//increment the length, until temp reaches slow ListNode again... 
+               int length = 0;
+               do{
+                 length++;
+                 temp = temp.next;
+             }while(temp != slow);
+             return length;
+
+        }
+        return 0;
+
+    }
+}
+```
+#### Q6)Linked-List Cycle II:-
+- Given the head of a linked list, return the node where the cycle begins. If there is no cycle, return null.
+- There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed). It is -1 if there is no cycle. Note that pos is not passed as a parameter.
+- Do not modify the linked list.
+```java
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head == null || head.next == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        int length = 0;
+        //run the frst while loop until fast pointer is thrown outside the Linked-List
+        //step 1:-Find the length of Linked-List cycle
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow){
+                ListNode temp = slow;
+                do{
+                    length = length + 1;
+                    temp = temp.next;
+                }while(temp != slow);
+                break;//important
+            }
+        }
+        //if no cycle is detected return null
+        if(length == 0) return null;
+        ListNode f = head;
+        ListNode s = head;
+        //step 2:-move second pointer till length of cycle
+        for(int i = 0; i < length; i++){
+            s = s.next;
+        }
+
+        //step 3:-move both first and second pointers until they meet each other as both are k distance away from each other
+        while(f != s){
+            f = f.next;
+            s = s.next;
+        }
+        return f;//or s
+
+    }
+}
+Input: head = [3,2,0,-4], pos = 1
+Output: tail connects to node index 1
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+```
+#### Q7)Happy Number
+- Write an algorithm to determine if a number n is happy.
+- A happy number is a number defined by the following process:
+- Starting with any positive integer, replace the number by the sum of the squares of its digits.
+- Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+- Those numbers for which this process ends in 1 are happy.
+- Return true if n is a happy number, and false if not.
+```java
+class Solution {
+    public boolean isHappy(int n) {
+        int first = n;//move this pointer by 1,i.e. find square of digits of only one number.
+        int second = n;//move this pointer by 2,i.e. find square of digits of first number and then square of digits of (square of first number)
+        //if first becomes equal to second that means cycle is detected and that number's addition of digits of squares are never gonna be 1
+        do{
+            first = squareOfDigits(first);
+            second = squareOfDigits(squareOfDigits(second));
+        }while(first != second);
+    //it will work for happy number as well ,if you want to know you can dry run by taking any example of happy number
+    if(first == 1)//i.e sum of square of digits becomes 1
+    {
+         return true;
+    }
+    return false;
+}
+
+public static int squareOfDigits(int number){
+    int ans = 0;
+    while(number > 0){
+        int lastDigit = number % 10;
+        ans += (lastDigit * lastDigit);
+        number /= 10;
+    }
+    return ans;
+}
+}
+Example 1:
+
+Input: n = 19
+Output: true
+Explanation:
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+```
+#### Q8)Middle of the LinkedList:-
+- Given the head of a singly linked list, return the middle node of the linked list.
+- If there are two middle nodes, return the second middle node.
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        //when fast pointer reaches at the end, slow pointer reaches at the middle of the Linked-List
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+```
+#### Q9) 
