@@ -174,4 +174,247 @@ public class InbuiltExamplesOfStacksQueues {
         */
     }
 }
+o/p:-
+7
+3
+32
+32
+32
+3
+4
+2
+2
+null
 ```
+## Implementation of customStack class:-
+CustomStack.java
+```java
+public class CustomStack {
+
+    /*
+     This is a FIXED SIZE stack (NOT resizable).
+     If stack becomes full and we try to insert,
+     an error message is shown or exception is thrown.
+    */
+
+    protected int[] data;
+    private static final int DEFAULT_SIZE = 10;
+
+    // ptr always points to the TOP element of stack
+    // ptr = -1 → stack is empty
+    int ptr = -1;
+
+    // ---------------- CONSTRUCTORS ----------------
+
+    public CustomStack() {
+        /*
+         this(DEFAULT_SIZE):
+
+         - Calls the parameterized constructor of SAME class
+         - Avoids code duplication
+         - Equivalent to:
+           new CustomStack(10)
+
+         Execution flow:
+         CustomStack() → CustomStack(int size) → array created
+        */
+        this(DEFAULT_SIZE);
+    }
+
+    public CustomStack(int size) {
+        this.data = new int[size];
+    }
+
+    // ---------------- PUSH ----------------
+    // Inserts element at top of stack
+    public boolean push(int item) {
+        if (isFull()) {
+            System.out.println("Stack is Full");
+            return false;
+        }
+        ptr++;
+        data[ptr] = item;
+        return true;
+    }
+
+    // ---------------- POP ----------------
+    // Removes & returns last inserted element
+    public int pop() throws Exception {
+        if (isEmpty()) {
+            throw new StackException("Cannot pop from an empty Stack!!");
+        }
+
+        int removed = data[ptr];
+        ptr--;
+        return removed;
+
+        // Short version:
+        // return data[ptr--];
+    }
+
+    // ---------------- PEEK ----------------
+    // Returns top element WITHOUT removing it
+    public int peek() throws Exception {
+        if (isEmpty()) {
+            throw new StackException("Cannot peek from an empty Stack!!");
+        }
+        return data[ptr];
+    }
+
+    // ---------------- HELPERS ----------------
+    public boolean isFull() {
+        // ptr == last valid index → stack is full
+        return ptr == data.length - 1;
+    }
+
+    public boolean isEmpty() {
+        return ptr == -1;
+    }
+}
+```
+
+DynamicStack.java
+```java
+public class DynamicStack extends CustomStack {
+
+    // ---------------- CONSTRUCTORS ----------------
+
+    public DynamicStack(int size) {
+        // Calls parent (CustomStack) constructor
+        // Initializes stack with given initial capacity
+        super(size);
+    }
+
+    public DynamicStack() {
+        // Calls default constructor of CustomStack
+        // Uses DEFAULT_SIZE defined in CustomStack
+        super();
+    }
+
+    /*
+     Amortized Time Complexity of push():
+
+     - Same behavior as ArrayList.add()
+     - Most push() operations take O(1)
+     - Occasionally, when array is full:
+         → resizing takes O(n)
+     - But resizing happens rarely
+     - Hence amortized T.C. = O(1)
+    */
+
+    @Override
+    public boolean push(int item) {
+
+        /*
+         This condition handles dynamic resizing:
+         - When internal array becomes full
+         - Create a new array of DOUBLE size
+         - Copy existing elements into new array
+        */
+        if (this.isFull()) {
+
+            // Create a new array with double capacity
+            int[] temp = new int[2 * data.length];
+
+            // Copy old stack elements into new array
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[i];
+            }
+
+            // Update reference to point to new array
+            data = temp;
+        }
+
+        /*
+         At this point:
+         - Stack is guaranteed NOT to be full
+         - We can safely insert element using parent logic
+        */
+        return super.push(item);
+    }
+}
+```
+
+StackException.java
+```java
+// Custom checked exception for Stack-related errors
+public class StackException extends Exception {
+
+    /*
+     Constructor of StackException
+
+     How it works:
+     - Accepts a custom error message
+     - Passes that message to the parent Exception class
+     - Parent class stores the message internally
+    */
+    public StackException(String message) {
+
+        /*
+         super(message):
+
+         - Calls constructor of Exception class
+         - Sets the exception message
+         - This message can later be retrieved using getMessage()
+        */
+        super(message);
+    }
+}
+```
+
+Main.java
+```java
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class Main {
+    //method that creates and method that uses exception should use throws Exception keywords in their method signature.
+    public static void main(String[] args) throws Exception {
+           CustomStack stack = new CustomStack(5);
+
+           stack.push(3);
+           stack.push(4);
+           stack.push(3);
+           stack.push(3);
+           stack.push(3);
+
+           System.out.println(stack.pop());
+           System.out.println(stack.pop());
+           System.out.println(stack.pop());
+           System.out.println(stack.pop());
+           System.out.println(stack.pop());
+          // System.out.println(stack.pop());//it will throw an exception as Cannot pop from an empty stack!!
+
+           System.out.println();
+
+           DynamicStack dynamicStack = new DynamicStack(2);
+           dynamicStack.push(4);
+           dynamicStack.push(4);
+           dynamicStack.push(5);//No error even though size was initialized as 2.
+
+           System.out.println(dynamicStack.pop());
+           System.out.println(dynamicStack.pop());
+           System.out.println(dynamicStack.pop());
+
+           CustomStack customAccessDynamicVersionImplementation = new DynamicStack(4);
+
+
+
+
+
+    }
+}
+o/p:-
+3
+3
+3
+4
+3
+
+5
+4
+4
+```
+
+## Implementation of CustomQueue:-
+
+
