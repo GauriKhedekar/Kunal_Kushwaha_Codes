@@ -186,7 +186,7 @@ o/p:-
 2
 null
 ```
-## Implementation of customStack class:-
+## Implementation of CustomStack class:-
 CustomStack.java
 ```java
 public class CustomStack {
@@ -364,8 +364,6 @@ public class StackException extends Exception {
 
 Main.java
 ```java
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     //method that creates and method that uses exception should use throws Exception keywords in their method signature.
     public static void main(String[] args) throws Exception {
@@ -416,5 +414,362 @@ o/p:-
 ```
 
 ## Implementation of CustomQueue:-
+CustomQueue.java
+```java
+public class CustomQueue {
+
+    /*
+     Fixed-size array implementation of Queue (FIFO)
+
+     NOTE:
+     - This is NOT a circular queue
+     - Removal is costly because elements are shifted
+    */
+
+    private int[] data;
+    private static final int DEFAULT_SIZE = 10;
+
+    /*
+     'end' points to the NEXT free position in array
+
+     Example:
+     end = 0 → queue is empty
+     insert(10) → data[0] = 10, end becomes 1
+     insert(20) → data[1] = 20, end becomes 2
+    */
+    int end = 0;
+
+    // ---------------- CONSTRUCTORS ----------------
+
+    public CustomQueue() {
+        // Calls parameterized constructor with default size
+        this(DEFAULT_SIZE);
+    }
+
+    public CustomQueue(int size) {
+        // Initializes queue with given capacity
+        this.data = new int[size];
+    }
+
+    // ---------------- STATE CHECKS ----------------
+
+    public boolean isFull() {
+        /*
+         Queue is full when:
+         end == data.length
+         (No more free space in array)
+        */
+        return end == data.length;
+    }
+
+    public boolean isEmpty() {
+        /*
+         Queue is empty when:
+         end == 0
+         (No elements inserted)
+        */
+        return end == 0;
+    }
+
+    // ---------------- INSERT ----------------
+    /*
+     Insertion Time Complexity: O(1)
+
+     - Insert element at index 'end'
+     - Increment end to point to next free slot
+    */
+    public boolean insert(int item) {
+        if (isFull()) {
+            return false;
+        }
+        data[end++] = item;
+        return true;
+    }
+
+    // ---------------- REMOVE ----------------
+    /*
+     Removal Time Complexity: O(n)
+
+     Reason:
+     - First element (index 0) must be removed
+     - Remaining elements are shifted one position left
+    */
+    public int remove() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is Empty!!");
+        }
+
+        int removed = data[0];
+
+        /*
+         Shift all elements to the left by one index:
+         data[1] → data[0]
+         data[2] → data[1]
+         ...
+        */
+        for (int i = 1; i < end; i++) {
+            data[i - 1] = data[i];
+        }
+
+        end--; // Reduce queue size
+        return removed;
+    }
+
+    // ---------------- FRONT ----------------
+    /*
+     Retrieves first element WITHOUT removing it
+     Time Complexity: O(1)
+    */
+    public int front() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is Empty!!");
+        }
+        return data[0];
+    }
+
+    // ---------------- DISPLAY ----------------
+    /*
+     Displays elements from front to rear
+    */
+    public void display() {
+        for (int i = 0; i < end; i++) {
+            System.out.print(data[i] + " ");
+        }
+        System.out.print("END");
+    }
+}
+```
+
+Main.java
+```java
+public class Main {
+    //method that creates and method that uses exception should use throws Exception keywords in their method signature.
+    public static void main(String[] args) throws Exception {
+        CustomQueue customQueue = new CustomQueue(4);
+
+        customQueue.insert(4);
+        customQueue.insert(5);
+        customQueue.insert(6);
+        customQueue.insert(9);
+
+        customQueue.display();
+
+        System.out.println();
+        System.out.println("Removed item:- " + customQueue.remove());
+
+        customQueue.display();
+
+    }
+}
+o/p:-
+4 5 6 9 END
+Removed item:- 4
+5 6 9 END
+```
+
+## Implementation of CircularQueue class:-
+CircularQueue.java
+```java
+public class CircularQueue {
+
+    /*
+     Circular Queue (Array-based)
+
+     Key idea:
+     - Uses modulo arithmetic to reuse array space
+     - Avoids shifting elements
+     - Insert and Remove both run in O(1)
+    */
+
+    /*
+     'front' always points to the FIRST (oldest) element
+     - Incremented when an element is removed
+    */
+    public int front = 0;
+
+    /*
+     'end' points to the NEXT free index for insertion
+     - Insert element first, then increment end
+     - Wrapped using modulo when it reaches array length
+    */
+    public int end = 0;
+
+    public int[] data;
+    private static final int DEFAULT_SIZE = 10;
+
+    /*
+     'size' tracks CURRENT number of elements in queue
+     - Used to detect full and empty states
+    */
+    private int size = 0;
+
+    // ---------------- CONSTRUCTORS ----------------
+
+    public CircularQueue() {
+        // Initializes queue with default capacity
+        this(DEFAULT_SIZE);
+    }
+
+    public CircularQueue(int size) {
+        // Initializes queue with user-defined capacity
+        this.data = new int[size];
+    }
+
+    // ---------------- STATE CHECKS ----------------
+
+    public boolean isFull() {
+        /*
+         Queue is full when:
+         number of elements == array capacity
+
+         We do NOT rely on 'end' because it keeps rotating
+        */
+        return size == data.length;
+    }
+
+    public boolean isEmpty() {
+        // Queue is empty when it has zero elements
+        return size == 0;
+    }
+
+    // ---------------- INSERT ----------------
+    /*
+     Time Complexity: O(1)
+
+     Steps:
+     1) Insert element at index 'end'
+     2) Move 'end' circularly using modulo
+     3) Increment current size
+    */
+    public boolean insert(int item) {
+        if (isFull()) {
+            return false;
+        }
+
+        data[end++] = item;
+        end = end % data.length;
+        size++;   // successful insertion increases element count
+
+        return true;
+    }
+
+    // ---------------- REMOVE ----------------
+    /*
+     Time Complexity: O(1)
+
+     Steps:
+     1) Remove element from index 'front'
+     2) Move 'front' circularly using modulo
+     3) Decrement current size
+    */
+    public int remove() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is Empty");
+        }
+
+        int removed = data[front];
+
+        front++;
+        front = front % data.length;
+        size--;   // successful removal decreases element count
+
+        return removed;
+    }
+
+    // ---------------- FRONT ----------------
+    /*
+     Retrieves the first element WITHOUT removing it
+     Time Complexity: O(1)
+    */
+    public int front() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is Empty!!");
+        }
+        return data[front];
+    }
+
+    // ---------------- DISPLAY ----------------
+    /*
+     Displays queue elements from front to rear
+     - Traverses exactly 'size' elements
+     - Correctly handles wrap-around
+    */
+    public void display() {
+        int count = 0;
+        int i = front;
+
+        while (count < size) {
+            System.out.print(data[i] + " -> ");
+            i = (i + 1) % data.length;
+            count++;
+        }
+        System.out.print("END");
+    }
+}
+```
+
+Main.java
+```java
+public class Main {
+    //method that creates and method that uses exception should use throws Exception keywords in their method signature.
+    public static void main(String[] args) throws Exception {
+        CircularQueue customQueue = new CircularQueue(4);
+
+        customQueue.insert(4);
+        customQueue.insert(5);
+        customQueue.insert(6);
+        customQueue.insert(9);
+
+        customQueue.display();
+
+        System.out.println();
+
+        System.out.println("Removed item:- " + customQueue.remove());
+
+        customQueue.display();
+
+    }
+}
+o/p:-
+4 -> 5 -> 6 -> 9 -> END
+Removed item:- 4
+5 -> 6 -> 9 -> END
+```
+## Implementation of DynamicQueue class:-
+
+```java
+public class DynamicQueue extends CircularQueue{
+
+    public DynamicQueue(int size){
+        super(size);
+    }
+
+    public DynamicQueue(){
+        super();
+    }
+
+    @Override
+    public boolean insert(int item){
+        //This(if condition)takes care of it(array) being full.(i.e.when array is full->double it's size.)
+        if(this.isFull()){
+            //double the ArraySize
+            int[] temp = new int[2 * data.length];
+
+            //Copy all previous items in data array
+            for(int i = 0; i < data.length; i++){
+                temp[i] = data[(front + i) % data.length];
+            }
+            //After copying elements from data to temp, update front and end.
+            front = 0;
+            end = data.length;
+            data = temp;
+        }
+
+        //at this point we know that an array is not full
+        //insert an item normally then...
+        return super.insert(item);
+    }
+}
+```
 
 
