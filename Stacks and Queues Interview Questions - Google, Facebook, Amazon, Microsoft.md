@@ -261,70 +261,49 @@ class Result {
 ->Expected Output
 4
 ```
-#### Next Greater element:-
-- Brute-force approach:-
+#### Next Greater element:- and not previous
 ```java
-//Problem link:-https://leetcode.com/problems/next-greater-element-i/
-// Time Complexity:
-// Stack processing for nums2: O(m)
-// Mapping nums1 elements: O(n * m)
-// Overall: O(n * m)
+//Problem link :- https://takeuforward.org/plus/dsa/problems/next-greater-element
+//Time Complexity: O(N), we traverse the entire array once and find next greater element in linear time.
+//Space Complexity: O(N), additional space used for resultant array and stack.
+import java.util.*;
 
-// Space Complexity:
-// Stack + NGE array: O(m)
-// Result array: O(n)
-// Overall: O(n + m)
-
+// Solution class to find next greater elements
 class Solution {
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        //nums1 = query array(contains elements of which we have to find next greater element)
-        //nums2 = main array
+    // Function to find next greater elements
+    public int[] nextGreater(int[] nums) {
+        // Stack to store elements
+        Stack<Integer> st = new Stack<>();
 
-        int[] nge = new int[nums2.length];
-        Stack<Integer> stack = new Stack<Integer>();
+        // Result array of same size
+        int n = nums.length;
+        int[] res = new int[n];
 
-        int i = nums2.length - 1;
-        //find next gretaer for all elements in nums2 array
-        while(i >= 0){
-             //remove lements until we get peek element in an stack greater than current element of an array 2 
-             while(!stack.isEmpty() && nums2[i] <= stack.peek()){
-                stack.pop();
-             }
-            //if we don't find any greater element for current element even after stack becomes empty return -1
-             if(stack.isEmpty()){
-                nge[i] = -1;
-             }
-             else{//if fount then store it in nge[]
-                nge[i] = stack.peek();
-             }
+        // Traverse from right to left
+        for (int i = n - 1; i >= 0; i--) {
 
-             //and then push it in a stack
-             stack.push(nums2[i]);
-             i--;
-
-        }
-
-        //make array to store only queried elements
-        int[] ans = new int[nums1.length];
-        for(int j = 0; j < nums1.length; j++){
-            for(int k = 0; k < nums2.length; k++){
-                 if(nums1[j] == nums2[k]){
-                    ans[j] = nge[k];
-                 }
+            // Pop all smaller or equal elements
+            while (!st.isEmpty() && st.peek() <= nums[i]) {
+                st.pop();
             }
 
+            // If stack is empty, no greater element
+            if (st.isEmpty()) res[i] = -1;
+
+            // Else top of stack is the answer
+            else res[i] = st.peek();
+
+            // Push current element
+            st.push(nums[i]);
         }
 
-        return ans;
-
+        // Return the result
+        return res;
     }
 }
-Input: nums1 = [4,1,2], nums2 = [1,3,4,2]
-Output: [-1,3,-1]
-Explanation: The next greater element for each value of nums1 is as follows:
-- 4 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.
-- 1 is underlined in nums2 = [1,3,4,2]. The next greater element is 3.
-- 2 is underlined in nums2 = [1,3,4,2]. There is no next greater element, so the answer is -1.
+Input: arr = [1, 3, 2, 4]
+Output: [3, 4, 4, -1]
+Explanation: In the array, the next larger element to 1 is 3, 3 is 4, 2 is 4 and for 4 is -1, since it does not exist.
 ```
 #### Previous smaller element:-
 - for visualization see striver sheet blog for this question.
