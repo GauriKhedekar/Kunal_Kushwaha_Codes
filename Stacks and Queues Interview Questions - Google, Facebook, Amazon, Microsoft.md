@@ -1,3 +1,10 @@
+# Stacks & Queues Questions:-
+![r](images/s&q_ques1.png)
+![r](images/s&q_ques2.png)
+![r](images/s&q_ques3.png)
+
+---
+
 #### 1)Implement Queue using stacks:-
 - Insert efficient i.e. .insert() :- T.C:-O(1)
 ```java
