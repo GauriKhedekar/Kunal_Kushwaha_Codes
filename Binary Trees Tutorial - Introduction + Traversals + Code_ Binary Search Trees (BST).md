@@ -1,6 +1,13 @@
 # Trees:-
 
-add images over here
+![q](images/BT1.png)
+![q](images/BT2.png)
+![q](images/BT3.png)
+![q](images/BT4.png)
+![q](images/BT5.png)
+![q](images/BT6.png)
+
+---
 
 # 🌳 Trees Data Structure –
 
@@ -865,6 +872,13 @@ Right of 5 → 7
 ![i](
 
 # 🌳 Binary Search Trees (BST)
+
+![q](images/BST1.png)
+![q](images/BST2.png)
+
+---
+
+
 ### 1️⃣ What is a Binary Search Tree?
 
 A Binary Search Tree (BST) is a type of binary tree where:
