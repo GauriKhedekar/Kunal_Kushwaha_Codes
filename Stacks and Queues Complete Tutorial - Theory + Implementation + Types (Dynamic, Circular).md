@@ -1,5 +1,8 @@
 # Stacks and Queues:-
-![e](/images/stack&q.png)
+![e](/images/stacks&queues1.png)
+![e](/images/stacks&queues2.png)
+
+---
 
 ```java
 import java.util.*;
