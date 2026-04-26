@@ -1,0 +1,6 @@
+1)If Scanner sc is passed as parameter → ❌ don’t create new
+If not given → ✅ create using:
+Scanner sc = new Scanner(System.in);
+2)Always return recursive calls (if function returns something)-> check return type in recursive calls
+3)Avoid unnecessary edge cases → recursion handles them.
+
