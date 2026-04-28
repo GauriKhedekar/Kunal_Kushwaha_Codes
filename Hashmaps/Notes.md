@@ -59,6 +59,20 @@ index 3 → [Kunal → Rahul → Armo]
 ```
 α = n / m
 ```
+### 📊 Understanding Load Factor ($\alpha$)
+
+If we assume **Simple Uniform Hashing** (where any given key is equally likely to hash into any of the $m$ slots), the elements will be distributed evenly across the array.
+
+* **Scenario:** You have $n = 100$ elements and $m = 20$ buckets.
+* **Calculation:** Each bucket will, on average, contain $\frac{100}{20} = 5$ elements.
+* **Conclusion:** Therefore, the **average length of the linked list** in any bucket is exactly $\alpha$.
+
+$$\alpha = \frac{n}{m}$$
+
+> [!TIP]
+> This is why we say the average time complexity for a search is $O(1 + \alpha)$. As long as $\alpha$ is kept constant (via rehashing), the search remains $O(1)$.
+
+
 - So: Search = O(1) + O(α)
 - ✔ If α ≈ constant → O(1)  
 - ❌ If all elements collide → α = n → O(n)
