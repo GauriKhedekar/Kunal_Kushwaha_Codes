@@ -122,9 +122,9 @@ threshold ≈ 0.75
 
 ### 🔄 What happens during resizing?
 
-1. Size doubles
-2. All elements are **rehashed**
-3. New indices are recalculated
+1. **Size doubles**: The underlying bucket(slot) array capacity is increased (usually multiplied by 2) to reduce the load factor $\alpha$.
+2. **All elements are rehashed**: The existing keys are not given new hash codes; rather, the `hashCode()` remains the same, but the **compression function** (like `hash % size`) is re-run.
+3. **New indices are recalculated**: Because the array `size` has changed, the modulo operation result changes, and elements are moved to their new correct positions in the larger array.
 
 ---
 ## ⏱️ Time Complexity
